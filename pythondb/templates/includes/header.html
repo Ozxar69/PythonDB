@@ -1,0 +1,22 @@
+{% load static %}
+<div class="header-container">
+    <div class="logo">
+        <a href="{% url 'main' %} "><img src="{% static 'logo.png' %}" alt="Логотип компании" width="30" height="30"></a>
+    </div>
+    <nav class="menu">
+        <ul>
+            {% for category in categories %}
+            <li><a href="{% url 'category' category.slug %}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+        <div class="spacer"></div> <!-- Пустой элемент для создания пространства -->
+        <div class="search">
+            <input type="text" placeholder="Поиск в базе..." class="search-input">
+            <button type="submit" class="search-button">Поиск</button>
+        </div>
+    <div class="auth">
+        <a href="#" class="auth-button">Регистрация</a>
+        <a href="#" class="auth-button">Вход</a>
+    </div>
+</div>

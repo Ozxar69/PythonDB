@@ -1,0 +1,104 @@
+[
+    {
+        "model": "knowledge_base.category",
+        "pk": 1,
+        "fields": {
+            "name": "Python",
+            "slug": "python",
+            "description": "Python — высокоуровневый язык программирования."
+        }
+    },
+    {
+        "model": "knowledge_base.category",
+        "pk": 2,
+        "fields": {
+            "name": "Django",
+            "slug": "django",
+            "description": "Django — мощный фреймворк для веб-разработки на Python."
+        }
+    },
+    {
+        "model": "knowledge_base.subcategory",
+        "pk": 1,
+        "fields": {
+            "name": "ООП",
+            "category": 1
+        }
+    },
+    {
+        "model": "knowledge_base.subcategory",
+        "pk": 2,
+        "fields": {
+            "name": "Типы данных",
+            "category": 1
+        }
+    },
+    {
+        "model": "knowledge_base.subcategory",
+        "pk": 3,
+        "fields": {
+            "name": "Модели",
+            "category": 2
+        }
+    },
+    {
+        "model": "knowledge_base.subcategory",
+        "pk": 4,
+        "fields": {
+            "name": "Представления",
+            "category": 2
+        }
+    },
+    {
+        "model": "knowledge_base.post",
+        "pk": 1,
+        "fields": {
+            "title": "Что такое ООП?",
+            "content": "ООП — это парадигма программирования, основанная на объектах.",
+            "category": 1,
+            "subcategory": 1,
+            "author": 2,
+            "created_at": "2023-10-01T12:00:00Z",
+            "updated_at": "2023-10-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "knowledge_base.post",
+        "pk": 2,
+        "fields": {
+            "title": "Списки в Python",
+            "content": "Списки — это изменяемые последовательности элементов.",
+            "category": 1,
+            "subcategory": 2,
+            "author": 2,
+            "created_at": "2023-10-01T12:00:00Z",
+            "updated_at": "2023-10-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "knowledge_base.post",
+        "pk": 3,
+        "fields": {
+            "title": "Модели в Django",
+            "content": "Модели представляют структуру базы данных.",
+            "category": 2,
+            "subcategory": 3,
+            "author": 2,
+            "created_at": "2023-10-01T12:00:00Z",
+            "updated_at": "2023-10-01T12:00:00Z"
+        }
+    },
+    {
+        "model": "knowledge_base.post",
+        "pk": 4,
+        "fields": {
+            "title": "Представления в Django",
+            "content": "Представления обрабатывают запросы и возвращают ответы.",
+            "category": 2,
+            "subcategory": 4,
+            "author": 2,
+            "created_at": "2023-10-01T12:00:00Z",
+            "updated_at": "2023-10-01T12:00:00Z"
+        }
+    }
+]

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <!-- Основной контент -->
+        <div class="sidebar">
+        <h2>Темы в категории:</h2>
+        <ul>
+            {% for subcategory in subcategories %}
+                <li><a href="{% url 'post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1>{{ category.name }}</h1>
+        <p>{{ category.description }}</p>
+    </div>
+
+
+
+</div>
+{% endblock %}

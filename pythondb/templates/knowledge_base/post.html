@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <!-- Основной контент -->
+    <div class="main-content">
+        {% if posts %}
+            {% for post in posts %}
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.content }}</p>
+            {% endfor %}
+        {% else %}
+            <p>Нет постов в этой подкатегории.</p>
+        {% endif %}
+    </div>
+
+    <!-- Боковая колонка с подтемами -->
+    <div class="sidebar">
+        <h2>Темы в категории:</h2>
+        <ul>
+            {% for subcategory in subcategories %}
+                <li><a href="{% url 'post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

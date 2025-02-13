@@ -1,0 +1,224 @@
+/* Основные стили */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e; /* Темный фон */
+    color: #ffffff; /* Белый текст */
+}
+
+/* Шапка */
+header {
+    background-color: #333; /* Темный фон для шапки */
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 2500px;
+    margin: 0 auto;
+}
+.logo {
+    margin-right: auto; /* Логотип прижимается к левому краю */
+}
+
+.logo img {
+    height: 40px; /* Высота логотипа */
+    width: auto;
+}
+
+.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-left: 250px; /* Отступ от логотипа */
+}
+
+.menu ul li {
+    margin-right: 40px;
+}
+
+.menu ul li:last-child {
+    margin-right: 0; /* Убираем отступ у последнего элемента */
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 25px; /* Увеличиваем размер шрифта */
+    padding: 10px 15px; /* Добавляем отступы внутри кнопок */
+    transition: color 0.3s, background-color 0.5s;
+    border-radius: 5px; /* Закругляем углы */
+}
+
+.menu ul li a:hover {
+    color: #ffcc00; /* Желтый цвет при наведении */
+    background-color: #4444; /* Легкий фон при наведении */
+}
+
+.auth {
+    display: flex;
+    gap: 10px;
+    margin-left: auto; /* Кнопки авторизации прижимаются к правому краю */
+}
+
+.auth-button {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #555;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.auth-button:hover {
+    background-color: #777; /* Светлее при наведении */
+}
+
+/* Основной контент */
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Подвал */
+footer {
+    background-color: #333;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.spacer {
+    flex-grow: 1; /* Занимает всё свободное пространство */
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    margin-right: 100px; /* Отступ от кнопок авторизации */
+}
+
+.search-input {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 2px solid #555;
+    border-radius: 5px 0 0 5px; /* Закругляем левые углы */
+    background-color: #444;
+    color: #ffffff;
+    outline: none;
+    width: 200px; /* Ширина поля ввода */
+    transition: border-color 0.3s;
+}
+
+.search-input::placeholder {
+    color: #aaa; /* Цвет текста placeholder */
+}
+
+.search-input:focus {
+    border-color: #ffcc00; /* Подсветка при фокусе */
+}
+
+.search-button {
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: #555;
+    color: #ffffff;
+    border: 2px solid #555;
+    border-radius: 0 5px 5px 0; /* Закругляем правые углы */
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #777; /* Светлее при наведении */
+    border-color: #777;
+}
+
+.search-input {
+    transition: width 0.3s, border-color 0.3s;
+}
+
+.search-input:focus {
+    width: 300px; /* Расширяем поле при фокусе */
+}
+
+/* Контейнер для основного контента и боковой колонки */
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto; /* Центрируем контейнер */
+    padding: 0 20px;
+    position: relative;
+}
+.sidebar {
+    width: 250px; /* Боковая колонка занимает 1 часть */
+    order: 1; /* Перемещаем колонку влево */
+    background-color: rgba(42, 42, 42, 0.3); /* Темный фон */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed; /* Фиксируем сайдбар */
+    left: 20px; /* Отступ от левого края */
+    top: 100px; /* Отступ сверху (под шапкой) */
+}
+/* Основной контент */
+.main-content {
+    flex: 1;
+    max-width: 800px;/* Основной контент занимает 3 части */
+    order: 2; /* Перемещаем основной контент вправо */
+    background-color: rgba(42, 42, 42, 0.3); /* Темный фон */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+}
+
+.main-content h1 {
+    color: #ffcc00; /* Желтый цвет для заголовка */
+    margin-bottom: 20px;
+}
+
+.main-content p {
+    line-height: 1.6;
+    font-size: 22px;
+    color: #ffffff; /* Белый текст */
+}
+
+/* Боковая колонка */
+
+
+.sidebar h2 {
+    color: #ffcc00; /* Желтый цвет для заголовка */
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #ffffff; /* Белый текст */
+    font-size: 22px;
+    transition: color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    color: #ffcc00; /* Желтый цвет при наведении */
+}
