@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="База данных по Python и фреймворкам">
-    <title>PythonDB</title>
+    <title> {% block title %}{% endblock %}PythonDB</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/prism.css' %}">
+    <script src="{% static 'css/prism.js' %}"></script>
     <link rel="icon" type="image/png" href="{% static 'icon/favicon-96x96.png' %}" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="{% static 'icon/favicon.svg' %}" />
     <link rel="shortcut icon" href="{% static 'icon/favicon.ico' %}" />
@@ -17,6 +19,7 @@
 <body>
     <header>
     {% include 'includes/header.html' %}
+
     </header>
     <main>
       {% block content %}

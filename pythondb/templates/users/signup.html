@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="signup-container">
+    <div class="signup-box">
+        <h1>Регистрация</h1>
+
+        <!-- Блок для отображения ошибок -->
+        {% if form.errors %}
+            <div class="error-message">
+                <p>Пожалуйста, исправьте следующие ошибки:</p>
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'users:signup' %}">
+            {% csrf_token %}
+
+            <!-- Поле "Имя" -->
+            <div class="form-group">
+                <label for="id_first_name">Имя <span class="required">*</span></label>
+                {{ form.first_name }}
+                <small class="form-text">Имя, которое будет отображаться</small>
+            </div>
+
+            <!-- Поле "Имя пользователя" -->
+            <div class="form-group">
+                <label for="id_username">Login <span class="required">*</span></label>
+                {{ form.username }}
+                <small class="form-text">Только буквы, цифры и символы @/./+/-/_.</small>
+            </div>
+
+            <!-- Поле "Email" -->
+            <div class="form-group">
+                <label for="id_email">Email <span class="required">*</span></label>
+                {{ form.email }}
+                <small class="form-text">Ваш email.</small>
+            </div>
+
+            <!-- Поле "Пароль" -->
+            <div class="form-group">
+                <label for="id_password1">Пароль <span class="required">*</span></label>
+                {{ form.password1 }}
+                <small class="form-text">
+                    Пароль должен содержать:
+                    <ul>
+                        <li>Не менее 8 символов.</li>
+                        <li>Хотя бы одну цифру.</li>
+                        <li>Хотя бы одну букву.</li>
+                    </ul>
+                </small>
+            </div>
+
+            <!-- Поле "Подтверждение пароля" -->
+            <div class="form-group">
+                <label for="id_password2">Подтверждение пароля <span class="required">*</span></label>
+                {{ form.password2 }}
+                <small class="form-text">Повторите пароль для подтверждения.</small>
+            </div>
+
+            <!-- Кнопка "Зарегистрироваться" -->
+            <button type="submit" class="signup-button">Зарегистрироваться</button>
+        </form>
+
+        <!-- Ссылка на вход -->
+        <div class="signup-links">
+            <p>Уже есть аккаунт? <a href="{% url 'users:login' %}">Войти</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

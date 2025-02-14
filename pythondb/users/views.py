@@ -1,0 +1,19 @@
+from django.views.generic import CreateView
+
+from django.urls import reverse_lazy
+
+from .forms import CreationForm, ResetPasswordForm
+
+
+class SignUp(CreateView):
+    form_class = CreationForm
+
+    success_url = reverse_lazy('knowledge_base:main')
+    template_name = 'users/signup.html'
+
+
+class ResetPassword(CreateView):
+    form_class = ResetPasswordForm
+
+    success_url = reverse_lazy('knowledge_base:main')
+    template_name = 'users/password_reset.html'

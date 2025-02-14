@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+{% block title %}
+{{ category.name }} -
+{% endblock %}
 {% block content %}
 <div class="container">
     <!-- Основной контент -->
@@ -7,7 +9,7 @@
         <h2>Темы в категории:</h2>
         <ul>
             {% for subcategory in subcategories %}
-                <li><a href="{% url 'post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
+                <li><a href="{% url 'knowledge_base:post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
             {% endfor %}
         </ul>
     </div>

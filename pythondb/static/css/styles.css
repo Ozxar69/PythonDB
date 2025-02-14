@@ -23,13 +23,18 @@ header {
 }
 .logo {
     margin-right: auto; /* Логотип прижимается к левому краю */
+    transition: transform 0.4s ease; /* Плавный переход для анимации */
 }
 
 .logo img {
     height: 40px; /* Высота логотипа */
     width: auto;
+    transition: transform 0.4s ease; /* Плавный переход для анимации */
 }
 
+.logo:hover img {
+    transform: scale(1.2); /* Увеличение логотипа на 10% при наведении */
+}
 .menu ul {
     list-style: none;
     margin: 0;
@@ -66,18 +71,34 @@ header {
     gap: 10px;
     margin-left: auto; /* Кнопки авторизации прижимаются к правому краю */
 }
-
+.username {
+    color: #ffffff; /* Белый текст */
+    margin-right: 10px; /* Отступ от кнопки "Выйти" */
+    font-size: 22px;
+    text-decoration: none; /* Убираем подчеркивание */
+    font-weight: 700; /* Жирный шрифт для соответствия стилю */
+    transition: color 0.3s; /* Плавный переход для цвета */
+}
+.username:hover {
+    color: #ffcc00; /* Цвет при наведении */
+}
 .auth-button {
-    text-decoration: none;
-    color: #ffffff;
-    background-color: #555;
+    display: inline-block;
     padding: 8px 16px;
+    background-color: #555; /* Темный фон кнопки */
+    color: #ffffff; /* Белый текст */
+    text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px; /* Отступ между кнопками */
 }
 
 .auth-button:hover {
     background-color: #777; /* Светлее при наведении */
+    transform: scale(1.05); /* Легкое увеличение при наведении */
 }
 
 /* Основной контент */
@@ -171,6 +192,20 @@ footer {
     left: 20px; /* Отступ от левого края */
     top: 100px; /* Отступ сверху (под шапкой) */
 }
+
+.create_post img {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    right: 400px; /* Отступ от левого края */
+    top: 100px;
+    transition: transform 0.4s ease;
+}
+.create_post:hover img {
+    transform: scale(1.2); /* Увеличение логотипа на 10% при наведении */
+}
+
+
 /* Основной контент */
 .main-content {
     flex: 1;
@@ -182,7 +217,34 @@ footer {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
 }
+.post {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #444; /* Разделитель между постами */
+}
+.post h1 {
+    color: #ffcc00; /* Желтый цвет для заголовка */
+    margin-bottom: 10px;
+}
 
+.post p {
+    line-height: 1.6;
+    color: #ffffff; /* Белый текст */
+    margin-bottom: 10px;
+}
+.post-meta {
+    text-align: right; /* Выравниваем по правому краю */
+    font-size: 14px; /* Уменьшаем шрифт */
+    color: #aaa; /* Серый цвет текста */
+    opacity: 0.8; /* Делаем текст полупрозрачным */
+}
+.post-date {
+    margin-right: 10px; /* Отступ между датой и автором */
+}
+
+.post-author {
+    font-style: italic; /* Курсив для автора */
+}
 .main-content h1 {
     color: #ffcc00; /* Желтый цвет для заголовка */
     margin-bottom: 20px;
@@ -222,3 +284,459 @@ footer {
 .sidebar ul li a:hover {
     color: #ffcc00; /* Желтый цвет при наведении */
 }
+
+.logout-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Занимает всю высоту экрана */
+    background-color: #1e1e1e; /* Темный фон */
+    padding: 20px;
+}
+
+/* Рамка для содержимого */
+.logout-box {
+    background-color: #2a2a2a; /* Темный фон */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Заголовок */
+.logout-box h1 {
+    color: #ffcc00; /* Желтый цвет для заголовка */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Текст */
+.logout-box p {
+    color: #ffffff; /* Белый текст */
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Кнопка "Войти снова" */
+.logout-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #555; /* Темный фон кнопки */
+    color: #ffffff; /* Белый текст */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.logout-button:hover {
+    background-color: #777; /* Светлее при наведении */
+    transform: scale(1.05); /* Легкое увеличение при наведении */
+}
+
+/* Анимация для кнопки */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logout-box {
+    animation: fadeIn 0.5s ease-in-out; /* Плавное появление */
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; /* Занимает всю высоту экрана */
+    background-color: #1e1e1e; /* Темный фон */
+    padding: 20px;
+}
+
+/* Рамка для содержимого */
+.login-box {
+    background-color: #2a2a2a; /* Темный фон */
+    padding: 60px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out; /* Плавное появление */
+}
+
+/* Заголовок */
+.login-box h1 {
+    color: #ffcc00; /* Желтый цвет для заголовка */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Группа полей формы */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    color: #ffffff; /* Белый текст */
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555; /* Граница поля */
+    border-radius: 5px;
+    background-color: #444; /* Темный фон поля */
+    color: #ffffff; /* Белый текст */
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #ffcc00; /* Подсветка при фокусе */
+    outline: none;
+}
+
+/* Кнопка "Войти" */
+.login-button {
+    width: 30%;
+    padding: 10px;
+    background-color: #555; /* Темный фон кнопки */
+    color: #ffffff; /* Белый текст */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-button:hover {
+    background-color: #777; /* Светлее при наведении */
+    transform: scale(1.05); /* Легкое увеличение при наведении */
+}
+
+/* Ссылки под формой */
+.login-links {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-links a {
+    color: #ffcc00; /* Желтый цвет для ссылок */
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.3s;
+}
+
+.login-links a:hover {
+    opacity: 0.8; /* Легкое затемнение при наведении */
+}
+
+/* Анимация для кнопки */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*форма для регистрации*/
+
+/* Контейнер для страницы регистрации */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Занимает всю высоту экрана */
+    background-color: #1e1e1e; /* Темный фон */
+    padding: 20px;
+}
+
+/* Рамка для содержимого */
+.signup-box {
+    background-color: #2a2a2a; /* Темный фон */
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out; /* Плавное появление */
+}
+
+/* Заголовок */
+.signup-box h1 {
+    color: #ffcc00; /* Желтый цвет для заголовка */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Группа полей формы */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    color: #ffffff; /* Белый текст */
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555; /* Граница поля */
+    border-radius: 5px;
+    background-color: #444; /* Темный фон поля */
+    color: #ffffff; /* Белый текст */
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #ffcc00; /* Подсветка при фокусе */
+    outline: none;
+}
+.required {
+    color: #ff4444; /* Красный цвет для обязательных полей */
+}
+
+/* Подсказки под полями */
+.form-text {
+    color: #aaa; /* Серый цвет для подсказок */
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.form-text ul {
+    margin: 5px 0 0 20px;
+    padding: 0;
+}
+
+.form-text li {
+    list-style-type: disc;
+}
+
+
+/* Кнопка "Зарегистрироваться" */
+.signup-button {
+    width: 50%;
+    padding: 10px;
+    background-color: #555; /* Темный фон кнопки */
+    color: #ffffff; /* Белый текст */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.signup-button:hover {
+    background-color: #777; /* Светлее при наведении */
+    transform: scale(1.05); /* Легкое увеличение при наведении */
+}
+
+/* Ссылки под формой */
+.signup-links {
+    margin-top: 20px;
+    color: #ffffff; /* Белый текст */
+    font-size: 14px;
+}
+
+.signup-links a {
+    color: #ffcc00; /* Желтый цвет для ссылок */
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.signup-links a:hover {
+    opacity: 0.8; /* Легкое затемнение при наведении */
+}
+
+/* Блок для ошибок */
+.error-message {
+    background-color: #ff4444; /* Красный фон */
+    color: #ffffff; /* Белый текст */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.error-message ul {
+    margin: 5px 0 0 20px;
+    padding: 0;
+}
+
+.error-message li {
+    list-style-type: disc;
+}
+
+/* Анимация для кнопки */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Контейнер для страницы восстановления пароля */
+.password-reset-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Высота контейнера */
+    background-color: #1e1e1e; /* Темный фон */
+    padding: 20px;
+}
+
+/* Рамка для содержимого */
+.password-reset-box {
+    background-color: #2a2a2a; /* Темный фон */
+    padding: 50px; /* Увеличенный padding */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px; /* Увеличенная ширина */
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out; /* Плавное появление */
+}
+
+/* Заголовок */
+.password-reset-box h1 {
+    color: #ffcc00; /* Желтый цвет для заголовка */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Группа полей формы */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    color: #ffffff; /* Белый текст */
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555; /* Граница поля */
+    border-radius: 5px;
+    background-color: #444; /* Темный фон поля */
+    color: #ffffff; /* Белый текст */
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #ffcc00; /* Подсветка при фокусе */
+    outline: none;
+}
+
+/* Пометка обязательных полей */
+.required {
+    color: #ff4444; /* Красный цвет для обязательных полей */
+}
+
+/* Подсказки под полями */
+.form-text {
+    color: #aaa; /* Серый цвет для подсказок */
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Кнопка "Восстановить пароль" */
+.password-reset-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #555; /* Темный фон кнопки */
+    color: #ffffff; /* Белый текст */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.password-reset-button:hover {
+    background-color: #777; /* Светлее при наведении */
+    transform: scale(1.05); /* Легкое увеличение при наведении */
+}
+
+/* Ссылки под формой */
+.password-reset-links {
+    margin-top: 20px;
+    color: #ffffff; /* Белый текст */
+    font-size: 14px;
+}
+
+.password-reset-links a {
+    color: #ffcc00; /* Желтый цвет для ссылок */
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.password-reset-links a:hover {
+    opacity: 0.8; /* Легкое затемнение при наведении */
+}
+
+/* Блок для ошибок */
+.error-message_password {
+    background-color: #ff4444; /* Красный фон */
+    color: #ffffff; /* Белый текст */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.error-message ul {
+    margin: 5px 0 0 20px;
+    padding: 0;
+}
+
+.error-message li {
+    list-style-type: disc;
+}
+
+/* Анимация для кнопки */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

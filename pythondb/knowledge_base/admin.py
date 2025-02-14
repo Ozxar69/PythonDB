@@ -14,4 +14,4 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_filter = ('author_id', ' category_id', 'subcategory_id')
+    list_filter = ('author', 'category_id', 'subcategory_id')

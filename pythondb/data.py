@@ -10,3 +10,4 @@ PATH_POST = 'knowledge_base/post.html'
 PATH_MAIN = 'knowledge_base/main.html'
 POSTS_BY_SUBCATEGORY = 'posts_by_subcategory'
 POSTS = 'posts'
+SUBCATEGORY = "subcategory"

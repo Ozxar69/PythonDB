@@ -1,25 +1,39 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block title %}
+{{ category.name }} -
+        {{ subcategory }} -
+{% endblock %}
 {% block content %}
 <div class="container">
     <!-- Основной контент -->
-    <div class="main-content">
-        {% if posts %}
-            {% for post in posts %}
+<div class="main-content">
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post">
                 <h1>{{ post.title }}</h1>
-                <p>{{ post.content }}</p>
-            {% endfor %}
-        {% else %}
-            <p>Нет постов в этой подкатегории.</p>
-        {% endif %}
-    </div>
+                <p>{{ post.content|safe  }}</p>
+                <div class="post-meta">
+                    <span class="post-date">{{ post.updated_at }}</span>
+                    <span class="post-author">{{ post.author }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Нет постов в этой подкатегории.</p>
+    {% endif %}
 
-    <!-- Боковая колонка с подтемами -->
+</div>
+    <div class="create_post" >
+    <a href="{% url 'knowledge_base:create_post' category_slug=category.slug subcategory_id=subcategory.id %}">
+    <img src="{% static 'post.png' %}" alt="Иконка создания поста" width="50" height="50">
+</a>
+ </div>
     <div class="sidebar">
         <h2>Темы в категории:</h2>
         <ul>
             {% for subcategory in subcategories %}
-                <li><a href="{% url 'post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
+                <li><a href="{% url 'knowledge_base:post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
             {% endfor %}
         </ul>
     </div>

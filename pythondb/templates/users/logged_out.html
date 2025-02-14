@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Выход - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="logout-container">
+    <div class="logout-box">
+        <h1>Выход</h1>
+        <p>Вы вышли из своей учётной записи. Ждём вас снова!</p>
+        <div class="logout-actions">
+            <a href="{% url 'login' %}" class="logout-button">Войти снова</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
