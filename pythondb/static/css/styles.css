@@ -79,6 +79,7 @@ header {
     font-weight: 700; /* Жирный шрифт для соответствия стилю */
     transition: color 0.3s; /* Плавный переход для цвета */
 }
+
 .username:hover {
     color: #ffcc00; /* Цвет при наведении */
 }
@@ -112,11 +113,12 @@ main {
 /* Подвал */
 footer {
     background-color: #333;
-    padding: 10px;
+    padding: 2px;
     text-align: center;
     position: fixed;
     bottom: 0;
     width: 100%;
+    height: 3%;
 }
 .spacer {
     flex-grow: 1; /* Занимает всё свободное пространство */
@@ -216,7 +218,33 @@ footer {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
+    overflow-y: auto; /* Включаем вертикальную прокрутку */
 }
+html {
+    scrollbar-width: thin; /* Для Firefox */
+    scrollbar-color: #ffcc00 rgba(42, 42, 42, 0.3); /* Для Firefox */
+}
+
+/* Стилизация для WebKit-браузеров (Chrome, Edge, Safari) */
+html::-webkit-scrollbar {
+    width: 45px; /* Ширина вертикального scrollbar */
+}
+
+html::-webkit-scrollbar-track {
+    background: rgba(42, 42, 42, 0.1); /* Цвет фона трека */
+    border-radius: 10px; /* Закругленные углы трека */
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #ffcc00; /* Цвет ползунка */
+    border-radius: 10px; /* Закругленные углы ползунка */
+    border: 10px solid rgba(42, 42, 42, 0.1); /* Граница ползунка */
+}
+
+html::-webkit-scrollbar-thumb:hover {
+    background: #e6b800; /* Цвет ползунка при наведении */
+}
+
 .post {
     margin-bottom: 20px;
     padding-bottom: 10px;
@@ -229,8 +257,22 @@ footer {
 
 .post p {
     line-height: 1.6;
-    color: #ffffff; /* Белый текст */
-    margin-bottom: 10px;
+    color: #ffffff;
+    margin: 15px 0;
+    font-size: 18px;
+    text-align: justify;
+    text-align-last: left; /* Последняя строка выравнивается по левому краю */
+    hyphens: auto; /* Автоматический перенос слов */
+    -ms-hyphens: auto;
+}
+
+.post ul, .post ol {
+    text-align: left; /* Отмена выравнивания по ширине для списков */
+    padding-left: 50px; /* Добавляем отступ для списков */
+}
+
+.post li {
+    margin-bottom: 15px; /* Отступ между элементами списка */
 }
 .post-meta {
     text-align: right; /* Выравниваем по правому краю */
@@ -249,11 +291,16 @@ footer {
     color: #ffcc00; /* Желтый цвет для заголовка */
     margin-bottom: 20px;
 }
-
 .main-content p {
+
     line-height: 1.6;
+    color: #ffffff;
+    margin: 15px 0;
     font-size: 22px;
-    color: #ffffff; /* Белый текст */
+    text-align: justify;
+    text-align-last: left; /* Последняя строка выравнивается по левому краю */
+    hyphens: auto; /* Автоматический перенос слов */
+    -ms-hyphens: auto;
 }
 
 /* Боковая колонка */
@@ -740,3 +787,65 @@ footer {
     }
 }
 
+/*создание поста*/
+
+
+.post-form {
+    background-color: rgba(42, 42, 42, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    width: 80%; /* Ширина формы */
+    max-width: 800px; /* Максимальная ширина формы */
+    margin: 0 auto; /* Центрирование формы */
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    color: #ffcc00;
+    margin-bottom: 5px;
+}
+
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box; /* Учитываем padding и border в ширине */
+}
+
+.form-field textarea {
+    height: 200px;
+    resize: vertical;
+}
+
+.error-message-post {
+    color: #ff4444;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.submit-button {
+    background-color: #555;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #777;
+    transform: scale(1.05);
+}

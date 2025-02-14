@@ -42,7 +42,6 @@ def post(request, subcategory_id, category_slug):
     subcategory = SubCategory.objects.filter(id=subcategory_id)
     for post in posts:
         post.content = markdown2.markdown(post.content)
-        post.content = re.sub(r'```(.*?)```', r'<pre><code class="language-python">\1</code></pre>', post.content, flags=re.DOTALL)
         post.content = re.sub(r'\'\'\'(.*?)\'\'\'',
                           r'<pre><code class="language-python">\1</code></pre>',
                           post.content, flags=re.DOTALL)
@@ -56,10 +55,10 @@ def post(request, subcategory_id, category_slug):
 
 @login_required
 def create_post(request, category_slug, subcategory_id):
+    dict = get_objects(category_slug)
     category = get_object_or_404(Category, slug=category_slug)
     subcategory = get_object_or_404(SubCategory, id=subcategory_id)
-    print(category)
-    print(subcategory)
+    subcategory_name = SubCategory.objects.filter(id=subcategory_id)
 
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -74,4 +73,10 @@ def create_post(request, category_slug, subcategory_id):
     else:
         form = PostForm()
 
-    return render(request, 'knowledge_base/created_post.html', {'form': form})
+    return render(request, 'knowledge_base/created_post.html', {
+        'form': form,
+        SUBCATEGORIES: dict[SUBCATEGORIES],
+        CATEGORIES: dict[CATEGORIES],
+        CATEGORY: dict[CATEGORY],
+        SUBCATEGORY: subcategory_name[0],
+    })

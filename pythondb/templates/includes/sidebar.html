@@ -1,0 +1,8 @@
+<div class="sidebar">
+    <h2>Темы в категории:</h2>
+    <ul>
+        {% for subcategory in subcategories %}
+            <li><a href="{% url 'knowledge_base:post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

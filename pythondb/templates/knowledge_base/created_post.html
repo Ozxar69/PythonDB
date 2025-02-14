@@ -1,16 +1,33 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-{{ category.name }} -
-        {{ subcategory }} -
+{{ category.name }} - {{ subcategory }} -
 {% endblock %}
+
 {% block content %}
 
-<h1>Создать пост</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Создать</button>
-</form>
+    <h1>Добавить запись в категорию - {{subcategory.name}}</h1>
 
+    <form method="post" class="post-form">
+        {% csrf_token %}
+        <div class="form-field">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="error-message">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="form-field">
+            {{ form.content.label_tag }}
+            <div class="textarea-container">
+                {{ form.content }}
+            </div>
+            {% if form.content.errors %}
+                <div class="error-message-post">{{ form.content.errors }}</div>
+            {% endif %}
+        </div>
+        <button type="submit" class="submit-button">Создать</button>
+    </form>
+
+{% include 'includes/sidebar.html' %}
 {% endblock %}

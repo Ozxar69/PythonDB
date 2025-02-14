@@ -28,14 +28,7 @@
     <a href="{% url 'knowledge_base:create_post' category_slug=category.slug subcategory_id=subcategory.id %}">
     <img src="{% static 'post.png' %}" alt="Иконка создания поста" width="50" height="50">
 </a>
- </div>
-    <div class="sidebar">
-        <h2>Темы в категории:</h2>
-        <ul>
-            {% for subcategory in subcategories %}
-                <li><a href="{% url 'knowledge_base:post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
+{% include 'includes/sidebar.html' %}
 </div>
+    </div>
 {% endblock %}
