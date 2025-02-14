@@ -275,15 +275,33 @@ html::-webkit-scrollbar-thumb:hover {
     margin-bottom: 15px; /* Отступ между элементами списка */
 }
 .post-meta {
-    text-align: right; /* Выравниваем по правому краю */
-    font-size: 14px; /* Уменьшаем шрифт */
-    color: #aaa; /* Серый цвет текста */
-    opacity: 0.8; /* Делаем текст полупрозрачным */
+    display: flex; /* Используем flexbox для выравнивания */
+    align-items: center; /* Выравниваем элементы по вертикали */
+    font-size: 14px;
+    color: #aaa;
+    opacity: 0.8;
+}
+.post-meta-right {
+    margin-left: auto;
+    text-align: right; /* Выравниваем текст по правому краю */
 }
 .post-date {
     margin-right: 10px; /* Отступ между датой и автором */
 }
+.post-edit-icon {
+    display: flex; /* Используем flexbox для иконок */
+    gap: 15px;
+}
 
+.post-edit-icon a {
+    display: inline-block; /* Чтобы ссылки вели себя как блоки */
+}
+.post-edit-icon a img {
+    transition: transform 0.3s ease; /* Плавное увеличение при наведении */
+}
+.post-edit-icon a:hover img {
+    transform: scale(1.2); /* Увеличение иконки на 20% */
+}
 .post-author {
     font-style: italic; /* Курсив для автора */
 }

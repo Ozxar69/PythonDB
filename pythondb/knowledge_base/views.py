@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+
+from .decorators import author_required
 from .models import Category, Post, SubCategory
 from .forms import PostForm
 from data import CATEGORY, SUBCATEGORIES, CATEGORIES, PATH_POST, \
@@ -80,3 +82,51 @@ def create_post(request, category_slug, subcategory_id):
         CATEGORY: dict[CATEGORY],
         SUBCATEGORY: subcategory_name[0],
     })
+
+@login_required
+@author_required
+def edit_post(request, category_slug, subcategory_id, post_id):
+    dict = get_objects(category_slug)
+    subcategory_name = SubCategory.objects.filter(id=subcategory_id)
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST,
+                        instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('knowledge_base:post', category_slug=category_slug,
+                            subcategory_id=subcategory_id)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'knowledge_base/edit_post.html', {
+        "form": form,
+        SUBCATEGORIES: dict[SUBCATEGORIES],
+        CATEGORIES: dict[CATEGORIES],
+        CATEGORY: dict[CATEGORY],
+        SUBCATEGORY: subcategory_name[0],
+    })
+
+
+@login_required
+@author_required
+def delete_post(request, category_slug, subcategory_id, post_id):
+    dict = get_objects(category_slug)
+    subcategory_name = SubCategory.objects.filter(id=subcategory_id)
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        post.delete()
+        return redirect('knowledge_base:post', category_slug=category_slug,
+                        subcategory_id=subcategory_id)
+
+    from django.http import HttpResponseNotAllowed
+    return HttpResponseNotAllowed(['POST'])
+
+
+
+
+
+
+
+# http://127.0.0.1:8000/python/1/1/edit_post/

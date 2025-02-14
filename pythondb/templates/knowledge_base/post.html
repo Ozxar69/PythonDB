@@ -13,10 +13,27 @@
             <div class="post">
                 <h1>{{ post.title }}</h1>
                 <p>{{ post.content|safe  }}</p>
-                <div class="post-meta">
-                    <span class="post-date">{{ post.updated_at }}</span>
-                    <span class="post-author">{{ post.author }}</span>
-                </div>
+                    <div class="post-meta">
+                        {% if user.is_authenticated %}
+                            {% if post.author == user or user.is_superuser %}
+                        <span class="post-edit-icon">
+                            <a href="{% url 'knowledge_base:edit_post' category_slug=category.slug subcategory_id=subcategory.id post_id=post.id%}">
+                                <img src="{% static 'edit.png' %}" alt="Иконка редактирования поста" width="30" height="30">
+                            </a>
+                                   <form method="post" action="{% url 'knowledge_base:delete_post' category_slug=category.slug subcategory_id=subcategory.id post_id=post.id %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                        <img src="{% static 'delete.png' %}" alt="Иконка удаления поста" width="30" height="30">
+                                    </button>
+                                </form>
+                        </span>
+                        {% endif %}
+                        {% endif %}
+                        <span class="post-meta-right">
+                            <span class="post-date">{{ post.updated_at }}</span>
+                            <span class="post-author">{{ post.author }}</span>
+                        </span>
+                    </div>
             </div>
         {% endfor %}
     {% else %}
