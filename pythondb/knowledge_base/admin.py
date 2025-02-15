@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Category, SubCategory, Post
+
+from .models import Category, Post, SubCategory
 
 
 @admin.register(Category)
@@ -14,4 +15,4 @@ class SubCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_filter = ('author', 'category_id', 'subcategory_id')
+    list_filter = ("author", "category_id", "subcategory_id")
