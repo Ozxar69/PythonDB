@@ -1,6 +1,6 @@
 SECRET_KEY = "SECRET_KEY"
+DATABASE_URL = "DATABASE_URL"
 
-DB_PATH = "db.sqlite3"
 
 CATEGORY = "category"
 CATEGORIES = "categories"
