@@ -1,6 +1,7 @@
-from django.contrib.auth.views import LogoutView, LoginView
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 from . import views
+from .views import login_view, profile_viev
 
 app_name = 'users'
 
@@ -12,9 +13,11 @@ urlpatterns = [
     ),
     path(
       'login/',
-      LoginView.as_view(template_name='users/login.html'),
+      login_view,
       name='login'
     ),
     path('signup/', views.SignUp.as_view(), name='signup'),
-    path('reset/', views.ResetPassword.as_view(), name='password_reset')
+    path('reset/', views.ResetPassword.as_view(), name='password_reset'),
+    path('profile/<int:user_id>/', profile_viev, name='profile'),
+
 ]

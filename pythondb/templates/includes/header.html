@@ -10,14 +10,16 @@
             {% endfor %}
         </ul>
     </nav>
-    <div class="spacer"></div>
-    <div class="search">
-        <input type="text" placeholder="Поиск в базе..." class="search-input">
-        <button type="submit" class="search-button">Поиск</button>
-    </div>
+        <div class="spacer"></div>
+        <div class="search">
+            <form action="{% url 'knowledge_base:search' %}" method="get">
+                <input type="text" name="q" placeholder="Поиск в базе..." class="search-input">
+                <button type="submit" class="search-button">Поиск</button>
+            </form>
+        </div>
     <div class="auth">
         {% if user.is_authenticated %}
-            <a href="#" class="username">{{ user.first_name }}</a>
+            <a href="{% url 'users:profile' user.id %}" class="username">{{ user.first_name }}</a>
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
                 <button type="submit" class="auth-button">Выйти</button>

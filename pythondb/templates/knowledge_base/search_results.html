@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Результаты поиска{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <h1>Результаты поиска для "{{ query }}"</h1>
+
+    <!-- Результаты поиска по категориям -->
+    {% if results.categories %}
+        <h2>Категории</h2>
+        <ul class="search-results-list">
+            {% for category in results.categories %}
+                <li class="search-result-item">
+                    <a href="{% url 'knowledge_base:category' category.slug %}" class="search-result-link">
+                        {{ category.name }}
+                    </a>
+                    <p class="search-result-description">{{ category.description|truncatechars:100 }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Результаты поиска по подкатегориям -->
+    {% if results.subcategories %}
+        <h2>Подкатегории</h2>
+        <ul class="search-results-list">
+            {% for subcategory in results.subcategories %}
+                <li class="search-result-item">
+                    <a href="{% url 'knowledge_base:post' category_slug=subcategory.category.slug subcategory_id=subcategory.id %}" class="search-result-link">
+                        {{ subcategory.name }} ({{ subcategory.category.name }})
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Результаты поиска по постам -->
+    {% if results.posts %}
+        <h2>Посты</h2>
+        <ul class="search-results-list">
+            {% for post in results.posts %}
+                <li class="search-result-item">
+                    <a href="{% url 'knowledge_base:post' category_slug=post.category.slug subcategory_id=post.subcategory.id %}" class="search-result-link">
+                        {{ post.title }} ({{ post.category.name }} → {{ post.subcategory.name }})
+                    </a>
+                    <p class="search-result-description">{{ post.content|truncatechars:200|striptags }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Если ничего не найдено -->
+    {% if not results.categories and not results.subcategories and not results.posts %}
+        <p class="no-results">Ничего не найдено.</p>
+    {% endif %}
+</div>
+{% endblock %}

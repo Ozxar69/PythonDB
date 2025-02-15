@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .decorators import author_required
@@ -124,9 +125,36 @@ def delete_post(request, category_slug, subcategory_id, post_id):
     return HttpResponseNotAllowed(['POST'])
 
 
+def search(request):
+    query = request.GET.get("q", '').strip()
+    categories_items = Category.objects.all()
+    if query:
+        search_terms = query.split()
 
+        category_query = Q()
+        for term in search_terms:
+            category_query |= Q(name__icontains=term) | Q(description__icontains=term)
+        categories = Category.objects.filter(category_query).distinct()
 
+        subcategory_query = Q()
+        for term in search_terms:
+            subcategory_query |= Q(name__icontains=term)
+        subcategories = SubCategory.objects.filter(subcategory_query).distinct()
 
+        post_query = Q()
+        for term in search_terms:
+            post_query |= Q(title__icontains=term) | Q(content__icontains=term)
+        posts = Post.objects.filter(post_query).distinct()
 
+        results = {
+            'categories': categories,
+            'subcategories': subcategories,
+            'posts': posts,
+        }
+        return render(request, 'knowledge_base/search_results.html', {
+            'query': query,
+            'results': results,
+            CATEGORIES: categories_items,
 
-# http://127.0.0.1:8000/python/1/1/edit_post/
+        })
+    return redirect('knowledge_base:main')
