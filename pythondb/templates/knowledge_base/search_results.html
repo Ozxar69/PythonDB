@@ -41,9 +41,9 @@
         <ul class="search-results-list">
             {% for post in results.posts %}
                 <li class="search-result-item">
-                    <a href="{% url 'knowledge_base:post' category_slug=post.category.slug subcategory_id=post.subcategory.id %}" class="search-result-link">
-                        {{ post.title }} ({{ post.category.name }} → {{ post.subcategory.name }})
-                    </a>
+                        <a href="{% url 'knowledge_base:post' category_slug=post.category.slug subcategory_id=post.subcategory.id %}#post-{{ post.id }}" class="search-result-link">
+                            {{ post.title }} ({{ post.category.name }} → {{ post.subcategory.name }})
+                        </a>
                     <p class="search-result-description">{{ post.content|truncatechars:200|striptags }}</p>
                 </li>
             {% endfor %}

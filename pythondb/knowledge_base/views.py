@@ -39,18 +39,25 @@ def main(request):
 
 def category(request, category_slug):
     dict = get_objects(category_slug)
-    posts_by_subcategory = {
-        subcategory.id: subcategory.posts.all()
-        for subcategory in dict[SUBCATEGORIES]
-    }
+    category = dict[CATEGORY]
+    category.description = markdown2.markdown(category.description)
+    category.description = re.sub(
+            r"\'\'\'(.*?)\'\'\'",
+            r'<pre><code class="language-python">\1</code></pre>',
+            category.description,
+            flags=re.DOTALL,
+        )
     return render(
         request,
         PATH_CATEGORIES,
         {
-            CATEGORY: dict[CATEGORY],
+            CATEGORY: category,
             SUBCATEGORIES: dict[SUBCATEGORIES],
             CATEGORIES: dict[CATEGORIES],
-            POSTS_BY_SUBCATEGORY: posts_by_subcategory,
+            POSTS_BY_SUBCATEGORY: {
+                subcategory.id: subcategory.posts.all()
+                for subcategory in dict[SUBCATEGORIES]
+            },
         },
     )
 

@@ -10,7 +10,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ("category", "id")
 
 
 @admin.register(Post)

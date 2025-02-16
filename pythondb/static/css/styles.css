@@ -15,13 +15,13 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(42, 42, 42, 0.3); /* Темный полупрозрачный слой */
+    background: rgba(42, 42, 42, 0.3);
     z-index: -1;
 }
 /* Шапка */
 header {
     background-color: #333; /* Темный фон для шапки */
-    padding: 10px 20px;
+    padding: 5px 3%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -29,11 +29,11 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 2500px;
-    margin: 0 auto;
+    max-width: 100%;
+
 }
 .logo {
-    margin-right: auto; /* Логотип прижимается к левому краю */
+    margin-right: 21px; /* Логотип прижимается к левому краю */
     transition: transform 0.4s ease; /* Плавный переход для анимации */
 }
 
@@ -51,7 +51,7 @@ header {
     margin: 0;
     padding: 0;
     display: flex;
-    margin-left: 250px; /* Отступ от логотипа */
+    margin-left: 20gd; /* Отступ от логотипа */
 }
 
 .menu ul li {
@@ -79,8 +79,7 @@ header {
 
 .auth {
     display: flex;
-    gap: 10px;
-    margin-left: auto; /* Кнопки авторизации прижимаются к правому краю */
+    gap: 10%;
 }
 .username {
     color: #ffffff; /* Белый текст */
@@ -124,12 +123,16 @@ main {
 /* Подвал */
 footer {
     background-color: #333;
-    padding: 2px;
+    padding: 1vh; /* Отступы относительно высоты экрана */
     text-align: center;
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 3%;
+    height: 1.5vh; /* Высота футера относительно высоты экрана */
+    font-size: 1.3vh; /* Размер шрифта относительно высоты экрана */
+    display: flex;
+    align-items: center; /* Выравнивание текста по центру по вертикали */
+    justify-content: center; /* Выравнивание текста по центру по горизонтали */
 }
 .spacer {
     flex-grow: 1; /* Занимает всё свободное пространство */
@@ -194,43 +197,26 @@ footer {
     padding: 0 20px;
     position: relative;
 }
-.sidebar {
-    width: 250px; /* Боковая колонка занимает 1 часть */
-    order: 1; /* Перемещаем колонку влево */
-    background-color: rgba(42, 42, 42, 0.3); /* Темный фон */
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: fixed; /* Фиксируем сайдбар */
-    left: 20px; /* Отступ от левого края */
-    top: 100px; /* Отступ сверху (под шапкой) */
-}
 
-.create_post img {
-    width: 50px;
-    height: 50px;
-    position: fixed;
-    right: 400px; /* Отступ от левого края */
-    top: 100px;
-    transition: transform 0.4s ease;
-}
 .create_post:hover img {
     transform: scale(1.2); /* Увеличение логотипа на 10% при наведении */
 }
 
 
-/* Основной контент */
-.main-content {
-    flex: 1;
-    max-width: 800px;/* Основной контент занимает 3 части */
-    order: 2; /* Перемещаем основной контент вправо */
-    background-color: rgba(42, 42, 42, 0.3); /* Темный фон */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 0 auto;
-    overflow-y: auto; /* Включаем вертикальную прокрутку */
+
+.create_post img {
+    width: 50px; /* Фиксированная ширина */
+    height: 50px; /* Фиксированная высота */
+    position: fixed;
+    right: 25%; /* Отступ в процентах */
+    top: 100px; /* Фиксированный отступ */
+    transition: transform 0.4s ease;
 }
+
+
+
+/* Основной контент */
+
 html {
     scrollbar-width: thin; /* Для Firefox */
     scrollbar-color: #ffcc00 rgba(42, 42, 42, 0.3); /* Для Firefox */
@@ -270,7 +256,7 @@ html::-webkit-scrollbar-thumb:hover {
     line-height: 1.6;
     color: #ffffff;
     margin: 15px 0;
-    font-size: 18px;
+    font-size: 20px;
     text-align: justify;
     text-align-last: left; /* Последняя строка выравнивается по левому краю */
     hyphens: auto; /* Автоматический перенос слов */
@@ -345,7 +331,30 @@ html::-webkit-scrollbar-thumb:hover {
 
 /* Боковая колонка */
 
+.main-content {
+    flex: 1;
+    max-width: 70%; /* Ширина в процентах */
+    background-color: rgba(42, 42, 42, 0.3);
+    padding: 20px; /* Фиксированные отступы */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    overflow-y: auto;
+    animation: fadeIn 0.5s ease-in-out;
+}
 
+.sidebar {
+    width: 250px; /* Боковая колонка занимает 1 часть */
+    order: 1; /* Перемещаем колонку влево */
+    background-color: rgba(42, 42, 42, 0.3); /* Темный фон */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed; /* Фиксируем сайдбар */
+    left: 20px; /* Отступ от левого края */
+    top: 100px; /* Отступ сверху (под шапкой) */
+    animation: fadeIn 0.2s ease-in-out;
+}
 .sidebar h2 {
     color: #ffcc00; /* Желтый цвет для заголовка */
     margin-bottom: 20px;
@@ -367,9 +376,94 @@ html::-webkit-scrollbar-thumb:hover {
     font-size: 22px;
     transition: color 0.3s;
 }
+.sidebar ul li a.active {
+    font-weight: bold;
+    color: #ffcc00; /* Желтый цвет для активной ссылки */
+    border-radius: 5px;
+    padding: 5px 10px;
+}
 
 .sidebar ul li a:hover {
     color: #ffcc00; /* Желтый цвет при наведении */
+}
+.posts-sidebar {
+    width: 250px; /* Боковая колонка занимает 1 часть */
+    background-color: rgba(42, 42, 42, 0.3); /* Темный фон */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed; /* Фиксируем сайдбар */
+    left: 300px; /* Отступ от левого края */
+    top: 200px; /* Отступ сверху (под шапкой) */
+    animation: fadeIn 0.2s ease-in-out;
+}
+.posts-sidebar h2 {
+    color: #ffcc00; /* Желтый цвет для заголовка */
+    margin-bottom: 20px;
+}
+
+.posts-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.posts-sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.posts-sidebar ul li a {
+    text-decoration: none;
+    color: #ffffff; /* Белый текст */
+    font-size: 22px;
+    transition: color 0.3s;
+}
+.posts-sidebar ul li a.active {
+    font-weight: bold;
+    color: #ffcc00; /* Желтый цвет для активной ссылки */
+    background-color: rgba(255, 204, 0, 0.1); /* Легкий фон */
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.posts-sidebar ul li a:hover {
+    color: #ffcc00; /* Желтый цвет при наведении */
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: transform 0.4s ease;
+}
+
+.modal-content {
+    background-color: rgba(42, 42, 42, 0.3);
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    background-color: #555;
+    color: #ffffff; /* Белый текст */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-buttons button:hover {
+    background-color: #777; /* Светлее при наведении */; /* Легкий фон при наведении */
+
 }
 
 

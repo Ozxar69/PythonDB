@@ -1,8 +1,13 @@
 <div class="sidebar">
     <h2>Темы в категории:</h2>
     <ul>
-        {% for subcategory in subcategories %}
-            <li><a href="{% url 'knowledge_base:post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
+        {% for subcat in subcategories %}
+            <li>
+                <a href="{% url 'knowledge_base:post' category.slug subcat.id %}"
+                   {% if subcat.id == subcategory.id %}class="active"{% endif %}>
+                    {{ subcat.name }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
 </div>

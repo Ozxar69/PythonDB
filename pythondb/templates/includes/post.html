@@ -2,7 +2,7 @@
 
     {% if posts %}
         {% for post in posts %}
-            <div class="post">
+            <div class="post" id="post-{{ post.id }}">
                 <h1>{{ post.title }}</h1>
                 <p>{{ post.content|safe  }}</p>
                     <div class="post-meta">
@@ -12,12 +12,10 @@
                             <a href="{% url 'knowledge_base:edit_post' category_slug=category.slug subcategory_id=subcategory.id post_id=post.id%}">
                                 <img src="{% static 'edit.png' %}" alt="Иконка редактирования поста" width="30" height="30">
                             </a>
-                                   <form method="post" action="{% url 'knowledge_base:delete_post' category_slug=category.slug subcategory_id=subcategory.id post_id=post.id %}" style="display: inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                        <img src="{% static 'delete.png' %}" alt="Иконка удаления поста" width="30" height="30">
-                                    </button>
-                                </form>
+                            <button type="button" class="delete-button" data-post-id="{{ post.id }}" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                <img src="{% static 'delete.png' %}" alt="Иконка удаления поста" width="30" height="30">
+                            </button>
+                        </span>
                         </span>
                         {% endif %}
                         {% endif %}
@@ -31,3 +29,17 @@
     {% else %}
         <p>Еще нет постов</p>
     {% endif %}
+<div id="deleteModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <p>Вы уверены, что хотите удалить пост?</p>
+        <div class="modal-buttons">
+            <button id="cancelButton" style="margin-right: 10px;">Отмена</button>
+            <form id="deleteForm" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="margin-right: 10px;">
+                    Удалить
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
