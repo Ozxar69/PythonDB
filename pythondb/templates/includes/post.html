@@ -20,8 +20,12 @@
                         {% endif %}
                         {% endif %}
                         <span class="post-meta-right">
+                            <span class="post-like">
+                                <a href="{% url 'knowledge_base:like_post' post.id %}">👍 {{ post.likes.count }}</a>
+                            </span>
                             <span class="post-date">{{ post.updated_at }}</span>
                             <span class="post-author"><a href="{% url 'users:profile' post.author.id %}">{{ post.author.first_name }}</a></span>
+
                         </span>
                     </div>
             </div>

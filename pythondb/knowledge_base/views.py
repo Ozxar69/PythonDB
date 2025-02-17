@@ -1,6 +1,8 @@
 import re
 
 import markdown2
+from django.http import JsonResponse
+
 from data import (
     CATEGORIES,
     CATEGORY,
@@ -87,7 +89,6 @@ def post(request, subcategory_id, category_slug):
     dict = get_objects(category_slug)
     posts = Post.objects.filter(subcategory_id=subcategory_id)
     subcategory = SubCategory.objects.filter(id=subcategory_id)
-
     for post in posts:
         post.content = re.sub(
             r"'''(.*?)'''",
@@ -237,3 +238,9 @@ def search(request):
             },
         )
     return redirect("knowledge_base:main")
+
+@login_required
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    post.toggle_like(request.user)
+    return redirect(request.META.get('HTTP_REFERER', '/'))

@@ -37,6 +37,13 @@ class Post(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
 
     def __str__(self):
         return self.title
+
+    def toggle_like(self, user):
+        if user in self.likes.all():
+            self.likes.remove(user)
+        else:
+            self.likes.add(user)
