@@ -1,6 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Добро пожаловать в базу данных Python и его фреймворкам!</h1>
-    <h3>Здесь вы найдете полезные материалы в быстром доступе.</h3>
-    <p>Зарегестрируйтесь, если хотите добавить материалы в базу</p>
+<div class="container-main">
+    <!-- Приветствие -->
+    <div class="welcome">
+        <h1>Добро пожаловать в базу данных Python и его фреймворкам!</h1>
+        <h3>Здесь вы найдете полезные материалы в быстром доступе.</h3>
+        <p>Зарегистрируйтесь, если хотите добавить материалы в базу.</p>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="main-content-main">
+        <!-- Последние 5 постов -->
+        <div class="latest-posts">
+            <h2>Последние посты</h2>
+            {% for post in latest_posts %}
+                <div class="post">
+                    <h3><a href="{% url 'knowledge_base:post' category_slug=post.category.slug subcategory_id=post.subcategory.id %}#post-{{ post.id }}">{{ post.title }}</a></h3>
+                    <p>{{ post.content|truncatewords:30|safe }}</p>
+                    <div class="post-meta">
+                        <span class="post-date">{{ post.created_at }}</span>
+                        <span class="post-author">
+                            <a href="{% url 'users:profile' post.author.id %}">{{ post.author.first_name }}</a>
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Блок справа -->
+    <div class="sidebar">
+        <!-- Топ 5 пользователей -->
+        <div class="top-users">
+            <h2>Топ пользователей</h2>
+            <ul>
+                {% for user in top_users %}
+                    <li>
+                        <a href="{% url 'users:profile' user.id %}">{{ user.first_name }}</a>
+                        <span>({{ user.post_count }} постов)</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Статистика по базе данных -->
+        <div class="statistics">
+            <h2>Статистика</h2>
+            <ul>
+                <li>Категории: {{ total_categories }}</li>
+                <li>Подкатегории: {{ total_subcategories }}</li>
+                <li>Посты: {{ total_posts }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

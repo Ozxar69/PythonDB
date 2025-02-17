@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+
 from data import CATEGORIES
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -36,7 +38,7 @@ def login_view(request):
             return render(request, "users/login.html", {"error_message": error_message})
     return render(request, "users/login.html")
 
-
+@login_required
 def profile_view(request, user_id):
     user_profile = get_object_or_404(User, id=user_id)
     categories = Category.objects.all()

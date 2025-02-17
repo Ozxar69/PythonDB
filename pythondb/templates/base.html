@@ -29,33 +29,6 @@
     <footer>
     {% include 'includes/footer.html' %}
     </footer>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const deleteButtons = document.querySelectorAll(".delete-button");
-        const deleteModal = document.getElementById("deleteModal");
-        const deleteForm = document.getElementById("deleteForm");
-        const cancelButton = document.getElementById("cancelButton");
 
-        deleteButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                const postId = this.getAttribute("data-post-id");
-                const actionUrl = `{% url 'knowledge_base:delete_post' category_slug=category.slug subcategory_id=subcategory.id post_id=0 %}`.replace("0", postId);
-                deleteForm.setAttribute("action", actionUrl);
-                deleteModal.style.display = "flex";
-            });
-        });
-
-        cancelButton.addEventListener("click", function () {
-            deleteModal.style.display = "none";
-        });
-
-        // Закрытие модального окна при клике вне его
-        window.addEventListener("click", function (event) {
-            if (event.target === deleteModal) {
-                deleteModal.style.display = "none";
-            }
-        });
-    });
-</script>
 </body>
 </html>

@@ -190,13 +190,6 @@ footer {
 }
 
 /* Контейнер для основного контента и боковой колонки */
-.container {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto; /* Центрируем контейнер */
-    padding: 0 20px;
-    position: relative;
-}
 
 .create_post:hover img {
     transform: scale(1.2); /* Увеличение логотипа на 10% при наведении */
@@ -208,8 +201,8 @@ footer {
     width: 50px; /* Фиксированная ширина */
     height: 50px; /* Фиксированная высота */
     position: fixed;
-    right: 25%; /* Отступ в процентах */
-    top: 100px; /* Фиксированный отступ */
+    top: 100px;
+    margin-left: 50%;
     transition: transform 0.4s ease;
 }
 
@@ -217,14 +210,11 @@ footer {
 
 /* Основной контент */
 
-html {
-    scrollbar-width: thin; /* Для Firefox */
-    scrollbar-color: #ffcc00 rgba(42, 42, 42, 0.3); /* Для Firefox */
-}
+
 
 /* Стилизация для WebKit-браузеров (Chrome, Edge, Safari) */
 html::-webkit-scrollbar {
-    width: 45px; /* Ширина вертикального scrollbar */
+    width: 5px; /* Ширина вертикального scrollbar */
 }
 
 html::-webkit-scrollbar-track {
@@ -262,7 +252,15 @@ html::-webkit-scrollbar-thumb:hover {
     hyphens: auto; /* Автоматический перенос слов */
     -ms-hyphens: auto;
 }
+.post a {
+    color: #ffcc00; /* Установите желаемый цвет для ссылки */
+    text-decoration: none; /* Убирает подчеркивание */
+}
 
+.post a:hover {
+    color: #ffffff; /* Цвет ссылки при наведении */
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
 .post ul, .post ol {
     text-align: left; /* Отмена выравнивания по ширине для списков */
     padding-left: 50px; /* Добавляем отступ для списков */
@@ -282,6 +280,8 @@ html::-webkit-scrollbar-thumb:hover {
     margin-left: auto;
     text-align: right; /* Выравниваем текст по правому краю */
 }
+
+
 .post-date {
     margin-right: 10px; /* Отступ между датой и автором */
 }
@@ -333,27 +333,64 @@ html::-webkit-scrollbar-thumb:hover {
 
 .main-content {
     flex: 1;
-    max-width: 70%; /* Ширина в процентах */
+    max-width: 50%; /* Ширина в процентах */
     background-color: rgba(42, 42, 42, 0.3);
     padding: 20px; /* Фиксированные отступы */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 0 auto;
     overflow-y: auto;
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.2s ease-in-out;
+    margin-left: 520px;
+    position: absolute;
+    left: 100px;
+}
+
+.container {
+    display: flex;
+    max-width: 70%; /* Увеличьте ширину контейнера */
+    margin: 0 auto; /* Центрируем контейнер */
+    padding: 0 20px;
 }
 
 .sidebar {
-    width: 250px; /* Боковая колонка занимает 1 часть */
-    order: 1; /* Перемещаем колонку влево */
-    background-color: rgba(42, 42, 42, 0.3); /* Темный фон */
+    width: 250px;
+    background-color: rgba(42, 42, 42, 0.3);
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: fixed; /* Фиксируем сайдбар */
     left: 20px; /* Отступ от левого края */
-    top: 100px; /* Отступ сверху (под шапкой) */
-    animation: fadeIn 0.2s ease-in-out;
+    top: 100px; /* Отступ сверху */
+    max-height: 80vh; /* Ограничиваем высоту сайдбара */
+    overflow-y: auto; /* Включаем вертикальный скролл */
+}
+.sidebar::-webkit-scrollbar {
+    width: 5px; /* Ширина вертикального scrollbar */
+}
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(42, 42, 42, 0.1); /* Цвет фона трека */
+    border-radius: 10px; /* Закругленные углы трека */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #ffcc00; /* Цвет ползунка */
+    border-radius: 10px; /* Закругленные углы ползунка */
+    border: 1px solid rgba(42, 42, 42, 0.1); /* Граница ползунка */
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #e6b800; /* Цвет ползунка при наведении */
+}
+.posts-sidebar {
+    width: 250px; /* Боковая колонка занимает 1 часть */
+    background-color: rgba(42, 42, 42, 0.3); /* Темный фон */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed; /* Фиксируем сайдбар */
+    left: 300px; /* Отступ от левого края */
+    top: 200px; /* Отступ сверху (под шапкой) */
+    animation: fadeIn 0.5s ease-in-out;
 }
 .sidebar h2 {
     color: #ffcc00; /* Желтый цвет для заголовка */
@@ -386,17 +423,7 @@ html::-webkit-scrollbar-thumb:hover {
 .sidebar ul li a:hover {
     color: #ffcc00; /* Желтый цвет при наведении */
 }
-.posts-sidebar {
-    width: 250px; /* Боковая колонка занимает 1 часть */
-    background-color: rgba(42, 42, 42, 0.3); /* Темный фон */
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: fixed; /* Фиксируем сайдбар */
-    left: 300px; /* Отступ от левого края */
-    top: 200px; /* Отступ сверху (под шапкой) */
-    animation: fadeIn 0.2s ease-in-out;
-}
+
 .posts-sidebar h2 {
     color: #ffcc00; /* Желтый цвет для заголовка */
     margin-bottom: 20px;
@@ -901,7 +928,6 @@ html::-webkit-scrollbar-thumb:hover {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
     width: 80%; /* Ширина формы */
     max-width: 800px; /* Максимальная ширина формы */
     margin: 0 auto; /* Центрирование формы */
@@ -1071,4 +1097,87 @@ h2 {
     font-size: 24px;
     border-bottom: 2px solid #444;
     padding-bottom: 5px;
+}
+
+
+/*Главная страница*/
+
+.container-main {
+
+    max-width: 50%; /* Ширина в процентах */
+    background-color: rgba(42, 42, 42, 0.3);
+    padding: 20px; /* Фиксированные отступы */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    animation: fadeIn 0.2s ease-in-out;
+    margin-left: 550px;
+    position: absolute;
+    left: 100px;
+}
+
+.welcome {
+    text-align: center;
+    margin-bottom: 40px;
+
+}
+
+.main-content-main {
+    flex: 2;
+}
+
+.latest-posts .post {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(42, 42, 42, 0.3);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.latest-posts .post h3 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+.latest-posts .post p {
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+
+.top-users, .statistics, .left-sidebar {
+    background-color: rgba(42, 42, 42, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.top-users h2, .statistics h2, .left-sidebar h2 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+.top-users ul, .statistics ul, .left-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.top-users li, .statistics li, .left-sidebar li {
+    margin-bottom: 10px;
+}
+
+.top-users a, .left-sidebar a {
+    color: #ffcc00;
+    text-decoration: none;
+}
+
+.top-users a:hover, .left-sidebar a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.left-sidebar-main {
+    flex: 1;
 }

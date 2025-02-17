@@ -12,10 +12,11 @@
         </div>
     <div class="create_post" >
     <a href="{% url 'knowledge_base:create_post' category_slug=category.slug subcategory_id=subcategory.id %}">
-    <img src="{% static 'post.png' %}" alt="Иконка создания поста" width="50" height="50">
+    <img src="{% static 'post.png' %}" alt="Иконка создания поста">
 </a>
+        </div>
 {% include 'includes/sidebar.html' %}
         {% include 'includes/posts_sidebar.html' %}
-</div>
+
     </div>
 {% endblock %}

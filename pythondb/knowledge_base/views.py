@@ -13,12 +13,12 @@ from data import (
     SUBCATEGORY,
 )
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .decorators import author_required
 from .forms import PostForm
-from .models import Category, Post, SubCategory
+from .models import Category, Post, SubCategory, User
 
 
 def get_objects(category_slug) -> dict:
@@ -33,8 +33,29 @@ def get_objects(category_slug) -> dict:
 
 
 def main(request):
+    # Получаем все категории
     categories = Category.objects.all()
-    return render(request, PATH_MAIN, {CATEGORIES: categories})
+
+    # Получаем последние 5 постов
+    latest_posts = Post.objects.select_related('category', 'subcategory', 'author').order_by('-created_at')[:5]
+
+    # Получаем топ 5 пользователей по количеству постов
+    top_users = User.objects.annotate(post_count=Count('posts')).order_by('-post_count')[:5]
+
+    # Статистика по базе данных
+    total_categories = Category.objects.count()
+    total_subcategories = SubCategory.objects.count()
+    total_posts = Post.objects.count()
+
+    return render(request, PATH_MAIN, {
+        'categories': categories,
+        'latest_posts': latest_posts,
+        'top_users': top_users,
+        'total_categories': total_categories,
+        'total_subcategories': total_subcategories,
+        'total_posts': total_posts,
+
+    })
 
 
 def category(request, category_slug):
@@ -66,14 +87,20 @@ def post(request, subcategory_id, category_slug):
     dict = get_objects(category_slug)
     posts = Post.objects.filter(subcategory_id=subcategory_id)
     subcategory = SubCategory.objects.filter(id=subcategory_id)
+
     for post in posts:
-        post.content = markdown2.markdown(post.content)
         post.content = re.sub(
-            r"\'\'\'(.*?)\'\'\'",
-            r'<pre><code class="language-python">\1</code></pre>',
+            r"'''(.*?)'''",
+            lambda match: f"<pre><code class='language-python'>{match.group(1)}</code></pre>",
             post.content,
             flags=re.DOTALL,
         )
+
+        post.content = markdown2.markdown(
+            post.content,
+            extras=["fenced-code-blocks", "code-friendly"]
+        )
+
     return render(
         request,
         PATH_POST,
