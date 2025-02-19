@@ -1,7 +1,7 @@
 import re
 
 import markdown2
-from django.http import JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
 
 from data import (
     CATEGORIES,
@@ -19,7 +19,7 @@ from django.db.models import Q, Count
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .decorators import author_required
-from .forms import PostForm
+from .forms import PostForm, SubcategoryForm
 from .models import Category, Post, SubCategory, User
 
 
@@ -27,6 +27,7 @@ def get_objects(category_slug) -> dict:
     category = get_object_or_404(Category, slug=category_slug)
     categories = Category.objects.all()
     subcategories = category.subcategories.all()
+
     return {
         CATEGORY: category,
         SUBCATEGORIES: subcategories,
@@ -35,16 +36,12 @@ def get_objects(category_slug) -> dict:
 
 
 def main(request):
-    # Получаем все категории
     categories = Category.objects.all()
 
-    # Получаем последние 5 постов
     latest_posts = Post.objects.select_related('category', 'subcategory', 'author').order_by('-created_at')[:5]
 
-    # Получаем топ 5 пользователей по количеству постов
     top_users = User.objects.annotate(post_count=Count('posts')).order_by('-post_count')[:5]
 
-    # Статистика по базе данных
     total_categories = Category.objects.count()
     total_subcategories = SubCategory.objects.count()
     total_posts = Post.objects.count()
@@ -89,10 +86,11 @@ def post(request, subcategory_id, category_slug):
     dict = get_objects(category_slug)
     posts = Post.objects.filter(subcategory_id=subcategory_id)
     subcategory = SubCategory.objects.filter(id=subcategory_id)
+
     for post in posts:
         post.content = re.sub(
-            r"'''(.*?)'''",
-            lambda match: f"<pre><code class='language-python'>{match.group(1)}</code></pre>",
+            r"'''(\w*)(.*?)'''",
+            lambda match: f"<pre><code class='language-{match.group(1) or 'python'}'>{match.group(2)}</code></pre>",
             post.content,
             flags=re.DOTALL,
         )
@@ -185,8 +183,6 @@ def edit_post(request, category_slug, subcategory_id, post_id):
 @login_required
 @author_required
 def delete_post(request, category_slug, subcategory_id, post_id):
-    dict = get_objects(category_slug)
-    subcategory_name = SubCategory.objects.filter(id=subcategory_id)
     post = get_object_or_404(Post, id=post_id)
 
     if request.method == "POST":
@@ -244,3 +240,31 @@ def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post.toggle_like(request.user)
     return redirect(request.META.get('HTTP_REFERER', '/'))
+
+@staff_member_required
+@login_required
+def create_subcategory(request, category_slug):
+    category = get_object_or_404(Category, slug=category_slug)
+    dict = get_objects(category_slug)
+
+    if request.method == 'POST':
+        form = SubcategoryForm(request.POST)
+        if form.is_valid():
+            subcategory = form.save(commit=False)
+            subcategory.category = category
+            subcategory.save()
+            return redirect('knowledge_base:category', category_slug=category_slug)  # Редирект на страницу категории
+    else:
+        form = SubcategoryForm()
+
+    return render(
+        request,
+        'knowledge_base/create_subcategory.html',
+        {
+            "form": form,
+            SUBCATEGORIES: dict[SUBCATEGORIES],
+            CATEGORIES: dict[CATEGORIES],
+            CATEGORY: dict[CATEGORY],
+        },
+    )
+

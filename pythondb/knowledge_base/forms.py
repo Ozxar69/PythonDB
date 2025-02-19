@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post
+from .models import Post, SubCategory
 
 
 class PostForm(forms.ModelForm):
@@ -26,3 +26,15 @@ class PostForm(forms.ModelForm):
         if not content:
             raise forms.ValidationError("Содержание не может быть пустым.")
         return content
+
+
+class SubcategoryForm(forms.ModelForm):
+    class Meta:
+        model = SubCategory
+        fields = ("name",)
+
+    def clean_name(self):
+        name = self.cleaned_data.get("name")
+        if not name:
+            raise forms.ValidationError("Укажите название подтемы.")
+        return name

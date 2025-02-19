@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-subcategory">
+    {% include 'includes/sidebar.html' %}
+    <h2>Создать подкатегорию для "{{ category.name }}"</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Создать подкатегорию</button>
+    </form>
+    <a href="{% url 'knowledge_base:category' category_slug=category.slug %}" class="btn btn-secondary">Назад к категории</a>
+</div>
+{% endblock %}

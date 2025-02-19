@@ -1,25 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
 {{ category.name }} -
 {% endblock %}
 {% block content %}
 <div class="container">
     <!-- Основной контент -->
-        <div class="sidebar">
-        <h2>Темы в категории:</h2>
-        <ul>
-            {% for subcategory in subcategories %}
-                <li><a href="{% url 'knowledge_base:post' category.slug subcategory.id %}">{{ subcategory.name }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
+        {% include 'includes/sidebar.html' %}
+       <div class="create_subcategory" >
+    <a href="{% url 'knowledge_base:create_subcategory' category_slug=category.slug %}">
+    <img src="{% static 'post.png' %}" alt="Иконка создания подтемы">
+</a>
+        </div>
 
     <div class="main-content">
         <h1>{{ category.name }}</h1>
         <p>{{ category.description|safe }}</p>
     </div>
-
-
-
 </div>
 {% endblock %}

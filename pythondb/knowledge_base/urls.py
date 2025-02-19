@@ -1,7 +1,6 @@
 from django.urls import path
 
 from . import views
-from .models import Post
 
 app_name = "knowledge_base"
 
@@ -16,6 +15,11 @@ urlpatterns = [
         "<slug:category_slug>/<int:subcategory_id>/create/",
         views.create_post,
         name="create_post",
+    ),
+    path(
+        "<slug:category_slug>/create_subcategory/",
+        views.create_subcategory,
+        name="create_subcategory",
     ),
     path(
         "<slug:category_slug>/<int:subcategory_id>/<int:post_id>/edit_post/",

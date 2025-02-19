@@ -206,7 +206,17 @@ footer {
     transition: transform 0.4s ease;
 }
 
-
+.create_subcategory img {
+    width: 50px; /* Фиксированная ширина */
+    height: 50px; /* Фиксированная высота */
+    position: fixed;
+    top: 100px;
+    left: 15%;
+    transition: transform 0.4s ease;
+}
+.create_subcategory:hover img {
+    transform: scale(1.2); /* Увеличение логотипа на 10% при наведении */
+}
 
 /* Основной контент */
 
@@ -391,7 +401,24 @@ html::-webkit-scrollbar-thumb:hover {
     left: 300px; /* Отступ от левого края */
     top: 200px; /* Отступ сверху (под шапкой) */
     animation: fadeIn 0.5s ease-in-out;
+    max-height: 70vh; /* Ограничиваем высоту сайдбара */
+    overflow-y: auto; /* Включаем вертикальный скролл */
 }
+
+.posts-sidebar::-webkit-scrollbar {
+    width: 5px; /* Ширина вертикального scrollbar */
+}
+.posts-sidebar::-webkit-scrollbar-track {
+    background: rgba(42, 42, 42, 0.1); /* Цвет фона трека */
+    border-radius: 10px; /* Закругленные углы трека */
+}
+
+.posts-sidebar::-webkit-scrollbar-thumb {
+    background: #ffcc00; /* Цвет ползунка */
+    border-radius: 10px; /* Закругленные углы ползунка */
+    border: 1px solid rgba(42, 42, 42, 0.1); /* Граница ползунка */
+}
+
 .sidebar h2 {
     color: #ffcc00; /* Желтый цвет для заголовка */
     margin-bottom: 20px;
@@ -928,9 +955,12 @@ html::-webkit-scrollbar-thumb:hover {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 80%; /* Ширина формы */
-    max-width: 800px; /* Максимальная ширина формы */
+     /* Убираем фиксированную ширину */
     margin: 0 auto; /* Центрирование формы */
+    min-width: 80%;
+    height: 80%;
+
+    display: inline-block; /* Позволяет растягиваться по ширине */
 }
 
 .form-field {
@@ -941,11 +971,22 @@ html::-webkit-scrollbar-thumb:hover {
     display: block;
     color: #ffcc00;
     margin-bottom: 5px;
+
 }
 
-.form-field input,
+.form-field input {
+    width: 40%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 16px;
+    box-sizing: border-box; /* Учитываем padding и border в ширине */
+}
 .form-field textarea {
     width: 100%;
+    min-height: 500px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #444;
@@ -957,7 +998,7 @@ html::-webkit-scrollbar-thumb:hover {
 
 .form-field textarea {
     height: 200px;
-    resize: vertical;
+    resize: both; /* Позволяет изменять размер в обоих направлениях */
 }
 
 .error-message-post {
@@ -1180,4 +1221,70 @@ h2 {
 
 .left-sidebar-main {
     flex: 1;
+}
+
+pre {
+    background-color: #2a2a2a; /* Темный фон */
+    padding: 15px; /* Отступы внутри блока */
+    border-radius: 10px; /* Закругленные углы */
+    border: 1px solid #444; /* Граница */
+    overflow-x: auto; /* Горизонтальный скролл, если код слишком длинный */
+    font-family: 'Courier New', monospace; /* Моноширинный шрифт */
+    font-size: 14px; /* Размер шрифта */
+    color: #ffcc00; /* Оранжевый цвет текста */
+    text-align: left; /* Выравнивание по левому краю */
+    margin: 15px 0; /* Отступы сверху и снизу */
+}
+
+code {
+    font-family: 'Courier New', monospace; /* Моноширинный шрифт */
+    font-size: 14px; /* Размер шрифта */
+    color: #ffcc00; /* Оранжевый цвет текста */
+}
+
+.container-subcategory {
+    margin: 20px auto; /* Устанавливаем верхний и нижний отступ, а также автоматические боковые отступы для центрирования */
+    max-width: 30%; /* Максимальная ширина контейнера */
+    padding: 20px;
+    background-color: #222; /* Фоновый цвет для формы */
+    border-radius: 5px; /* Закругленные углы */
+    position: relative; /* Убедитесь, что позиционирование установлено на relative */
+}
+
+.container-subcategory h2 {
+    color: #ffcc00; /* Желтый цвет для заголовка */
+    margin-bottom: 15px;
+}
+
+.container-subcategory form {
+    margin-top: 10px;
+}
+
+.container-subcategory button.btn-primary {
+    background-color: #ffcc00; /* Желтый цвет для кнопки */
+    color: #222; /* Цвет текста на кнопке */
+    border: none; /* Убираем границу */
+    padding: 10px 15px; /* Отступы для кнопки */
+    border-radius: 5px; /* Закругленные углы */
+    cursor: pointer; /* Указатель при наведении */
+}
+
+.container-subcategory button.btn-primary:hover {
+    background-color: #ffffff; /* Цвет кнопки при наведении */
+    color: #222; /* Цвет текста при наведении */
+}
+
+.container-subcategory a.btn-secondary {
+    display: inline-block; /* Чтобы кнопка отображалась корректно */
+    margin-top: 10px;
+    padding: 10px 15px; /* Отступы для кнопки */
+    background-color: #444; /* Цвет фона для кнопки "Назад" */
+    color: #ffcc00; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    border-radius: 5px; /* Закругленные углы */
+}
+
+.container-subcategory a.btn-secondary:hover {
+    background-color: #ffcc00; /* Цвет фона при наведении */
+    color: #222; /* Цвет текста при наведении */
 }
