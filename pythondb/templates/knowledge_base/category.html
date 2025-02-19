@@ -7,12 +7,13 @@
 <div class="container">
     <!-- Основной контент -->
         {% include 'includes/sidebar.html' %}
+        {% if user.is_superuser %}
        <div class="create_subcategory" >
     <a href="{% url 'knowledge_base:create_subcategory' category_slug=category.slug %}">
     <img src="{% static 'post.png' %}" alt="Иконка создания подтемы">
 </a>
         </div>
-
+        {% endif %}
     <div class="main-content">
         <h1>{{ category.name }}</h1>
         <p>{{ category.description|safe }}</p>

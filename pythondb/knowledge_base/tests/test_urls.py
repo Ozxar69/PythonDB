@@ -1,20 +1,26 @@
 from django.contrib.auth.models import User
-from django.test import TestCase, Client
+from django.test import Client, TestCase
 from django.urls import reverse
-from knowledge_base.models import Category, SubCategory, Post
 
+from knowledge_base.models import Category, Post, SubCategory
 
 
 class KnowledgeBaseURLTests(TestCase):
     def setUp(self):
         self.guest_client = Client()
-        self.user = User.objects.create_user(username="testuser", password="testpass")
+        self.user = User.objects.create_user(
+            username="testuser", password="testpass"
+        )
         self.user_client = Client()
         self.user_client.login(username="testuser", password="testpass")
 
         # Создаем тестовые данные
-        self.category = Category.objects.create(name="Test Category", slug="test-category")
-        self.subcategory = SubCategory.objects.create(name="Test SubCategory", category=self.category)
+        self.category = Category.objects.create(
+            name="Test Category", slug="test-category"
+        )
+        self.subcategory = SubCategory.objects.create(
+            name="Test SubCategory", category=self.category
+        )
         self.post = Post.objects.create(
             title="Test Post",
             content="Test Content",
@@ -37,8 +43,7 @@ class KnowledgeBaseURLTests(TestCase):
     def test_search_page(self):
         """Страница поиска доступна всем."""
         url = reverse("knowledge_base:search")
-        response = self.guest_client.get(url, {
-            "q": "test"})
+        response = self.guest_client.get(url, {"q": "test"})
         self.assertEqual(response.status_code, 200)
 
     def test_category_page(self):
@@ -49,26 +54,36 @@ class KnowledgeBaseURLTests(TestCase):
 
     def test_post_page(self):
         """Страница поста доступна всем."""
-        url = reverse("knowledge_base:post", args=[self.category.slug, self.subcategory.id])
+        url = reverse(
+            "knowledge_base:post",
+            args=[self.category.slug, self.subcategory.id],
+        )
         response = self.guest_client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_create_post_page(self):
         """Страница создания поста доступна авторизованным пользователям."""
-        url = reverse("knowledge_base:create_post", args=[self.category.slug, self.subcategory.id])
+        url = reverse(
+            "knowledge_base:create_post",
+            args=[self.category.slug, self.subcategory.id],
+        )
         response = self.user_client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_edit_post_page(self):
         """Страница редактирования поста доступна авторизованным пользователям."""
-        url = reverse("knowledge_base:edit_post", args=[self.category.slug, self.subcategory.id, self.post.id])
+        url = reverse(
+            "knowledge_base:edit_post",
+            args=[self.category.slug, self.subcategory.id, self.post.id],
+        )
         response = self.user_client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_delete_post_page(self):
         """Страница удаления поста доступна авторизованным пользователям."""
-        url = reverse("knowledge_base:delete_post",
-                      args=[self.category.slug, self.subcategory.id,
-                            self.post.id])
+        url = reverse(
+            "knowledge_base:delete_post",
+            args=[self.category.slug, self.subcategory.id, self.post.id],
+        )
         response = self.user_client.post(url)
         self.assertEqual(response.status_code, 302)

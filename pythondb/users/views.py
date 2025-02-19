@@ -1,11 +1,11 @@
-from django.contrib.auth.decorators import login_required
-
-from data import CATEGORIES
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+
+from data import CATEGORIES
 from knowledge_base.models import Category, Post
 
 from .forms import CreationForm, ResetPasswordForm
@@ -35,8 +35,11 @@ def login_view(request):
             return redirect("knowledge_base:main")
         else:
             error_message = "Неверный логин или пароль"
-            return render(request, "users/login.html", {"error_message": error_message})
+            return render(
+                request, "users/login.html", {"error_message": error_message}
+            )
     return render(request, "users/login.html")
+
 
 @login_required
 def profile_view(request, user_id):

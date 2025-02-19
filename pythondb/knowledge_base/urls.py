@@ -7,7 +7,7 @@ app_name = "knowledge_base"
 
 urlpatterns = [
     path("", views.main, name="main"),
-    path('post/<int:post_id>/like/', views.like_post, name='like_post'),
+    path("post/<int:post_id>/like/", views.like_post, name="like_post"),
     path("search/", views.search, name="search"),
     path("<slug:category_slug>/", views.category, name="category"),
     path("<slug:category_slug>/<int:subcategory_id>/", views.post, name="post"),
@@ -31,5 +31,4 @@ urlpatterns = [
         views.delete_post,
         name="delete_post",
     ),
-
 ]

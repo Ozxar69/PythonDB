@@ -8,7 +8,14 @@
 <div class="container">
     <!-- Основной контент -->
     <div class="main-content">
-{% include 'includes/post.html' %}
+        {% include 'includes/post.html' %}
+        {% if user.is_superuser %}
+         <div class="create_subcategory" >
+    <a href="{% url 'knowledge_base:create_subcategory' category_slug=category.slug %}">
+    <img src="{% static 'post.png' %}" alt="Иконка создания подтемы">
+        </a>
+        </div>
+        {% endif %}
         </div>
     <div class="create_post" >
     <a href="{% url 'knowledge_base:create_post' category_slug=category.slug subcategory_id=subcategory.id %}">

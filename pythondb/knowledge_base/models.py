@@ -14,7 +14,9 @@ class Category(models.Model):
 
 
 class SubCategory(models.Model):
-    name = models.CharField(max_length=100, unique=True, verbose_name='Название')
+    name = models.CharField(
+        max_length=100, unique=True, verbose_name="Название"
+    )
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="subcategories"
     )
@@ -24,8 +26,8 @@ class SubCategory(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=200, verbose_name='Заголовок')
-    content = models.TextField(verbose_name='Содержимое')
+    title = models.CharField(max_length=200, verbose_name="Заголовок")
+    content = models.TextField(verbose_name="Содержимое")
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="posts"
     )
