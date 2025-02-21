@@ -373,9 +373,11 @@ html::-webkit-scrollbar-thumb:hover {
     top: 100px; /* Отступ сверху */
     max-height: 80vh; /* Ограничиваем высоту сайдбара */
     overflow-y: auto; /* Включаем вертикальный скролл */
+    overflow-x: auto; /* Включаем горизонтальный скролл */
 }
 .sidebar::-webkit-scrollbar {
     width: 5px; /* Ширина вертикального scrollbar */
+    height: 5px; /* Высота горизонтального scrollbar */
 }
 .sidebar::-webkit-scrollbar-track {
     background: rgba(42, 42, 42, 0.1); /* Цвет фона трека */
@@ -403,10 +405,12 @@ html::-webkit-scrollbar-thumb:hover {
     animation: fadeIn 0.5s ease-in-out;
     max-height: 70vh; /* Ограничиваем высоту сайдбара */
     overflow-y: auto; /* Включаем вертикальный скролл */
+    overflow-x: auto; /* Включаем горизонтальный скролл */
 }
 
 .posts-sidebar::-webkit-scrollbar {
     width: 5px; /* Ширина вертикального scrollbar */
+    height: 5px; /* Высота горизонтального scrollbar */
 }
 .posts-sidebar::-webkit-scrollbar-track {
     background: rgba(42, 42, 42, 0.1); /* Цвет фона трека */

@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 from data import SECRET_KEY
+from datetime import timedelta, timezone
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -27,12 +28,36 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "knowledge_base.apps.KnowledgeBaseConfig",
     "django.contrib.admin",
-    "django.contrib.auth",
+    'django.contrib.auth',
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'rest_framework',
+    'djoser',
+
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'TIME_ZONE': timezone.utc,
+}
+
+
+CSRF_COOKIE_SECURE = False
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = False
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -127,3 +152,4 @@ PASSWORD_RESET_URL = "users:password_reset"
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
