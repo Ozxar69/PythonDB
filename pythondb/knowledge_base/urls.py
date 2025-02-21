@@ -2,13 +2,11 @@ from django.urls import path
 
 from . import views
 
-
 app_name = "knowledge_base"
 
 
 urlpatterns = [
     path("", views.main, name="main"),
-
     path("post/<int:post_id>/like/", views.like_post, name="like_post"),
     path("search/", views.search, name="search"),
     path("<slug:category_slug>/", views.category, name="category"),
