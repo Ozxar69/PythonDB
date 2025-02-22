@@ -91,15 +91,24 @@ WSGI_APPLICATION = "pythondb.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-DIRRECTION = os.getenv("DATABASE_URL")
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": DIRRECTION,
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME", "default_db_name"),
+        "USER": os.getenv("DB_USER", "default_user"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "default_password"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
-
-
+# sqlite3
+# DIRRECTION = os.getenv("DATABASE_URL")
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": DIRRECTION,
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

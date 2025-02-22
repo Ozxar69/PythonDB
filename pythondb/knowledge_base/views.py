@@ -172,9 +172,11 @@ def post(request, subcategory_id, category_slug):
     subcategory = SubCategory.objects.filter(id=subcategory_id)
 
     for post in posts:
+        post.content = post.content.strip()
+
         post.content = re.sub(
-            r"'''(\w*)(.*?)'''",
-            lambda match: f"<pre><code class='language-{match.group(1) or 'python'}'>{match.group(2)}</code></pre>",
+            r"'''(\w*)\s*(.*?)\s*'''",
+            lambda match: f"<pre><code class='language-{match.group(1) or 'python'}'>{match.group(2).strip()}</code></pre>",
             post.content,
             flags=re.DOTALL,
         )
@@ -184,6 +186,7 @@ def post(request, subcategory_id, category_slug):
             lambda match: f"&lt;{match.group(0)[1:-1]}&gt;",
             post.content,
         )
+
         post.content = markdown2.markdown(
             post.content, extras=["fenced-code-blocks", "code-friendly"]
         )
