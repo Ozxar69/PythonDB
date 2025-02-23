@@ -1336,12 +1336,52 @@ code {
     right: 20px;
     top: 30px;
     width: 20%;
-    height: 100%;
-    z-index: 1000;
     overflow: hidden;
-    resize: vertical;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, height 0.3s ease;
+    visibility: hidden; /* Начальное скрытие */
+    opacity: 0; /* Начальная прозрачность */
+
+}
+.toggle-button {
+    position: fixed; /* Фиксированное позиционирование */
+    top: 10%;
+    right: 21%; /* Отступ справа */
+    background-color: #ffcc00;
+    color: #222;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 1000; /* Убедимся, что кнопка поверх других элементов */
 }
 
+.toggle-button:hover {
+    transform: scale(1.25);
+}
+.chat-container.visible {
+    visibility: visible; /* Показываем чат */
+    opacity: 1; /* Делаем его полностью видимым */
+}
+/* Стили для свернутого состояния */
+.chat-container.collapsed {
+    height: 0; /* Высота только для кнопки */
+    width: 0; /* Ширина только для кнопки */
+    overflow: hidden;
+}
+
+.chat-container.collapsed .messages,
+.chat-container.collapsed #chat-form,
+.chat-container.collapsed .clean-button {
+    display: none; /* Скрываем содержимое чата */
+}
 /* Заголовок чата */
 .chat-container h1 {
     color: #ffcc00;

@@ -1,7 +1,5 @@
 <div class="chat-container">
-
-        <h1>Chat with GPT</h1>
-
+    <h1>Chat with GPT</h1>
     <div class="messages">
         {% for dialogue in dialogues %}
             <div class="message user-message">
@@ -31,6 +29,9 @@
         <button type="submit" class="clean-button">Очистить чат</button>
     </form>
 </div>
+<button id="toggle-chat" class="toggle-button">▼</button>
+<!-- Кнопка сворачивания/разворачивания -->
+
 
 
 <script>
@@ -111,5 +112,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButton = document.getElementById('toggle-chat');
+    const chatContainer = document.querySelector('.chat-container');
 
+    // Проверяем сохраненное состояние
+    const isCollapsed = localStorage.getItem('chatCollapsed') === 'true';
+
+    // Устанавливаем начальное состояние
+    if (isCollapsed) {
+        chatContainer.classList.add('collapsed');
+        toggleButton.textContent = '▲'; // Иконка разворачивания
+    } else {
+        toggleButton.textContent = '▼'; // Иконка сворачивания
+    }
+
+    // Делаем чат видимым после загрузки состояния
+    chatContainer.classList.add('visible');
+
+    // Обработка клика по кнопке
+    toggleButton.addEventListener('click', function () {
+        // Переключаем состояние
+        chatContainer.classList.toggle('collapsed');
+
+        // Сохраняем состояние в localStorage
+        const isNowCollapsed = chatContainer.classList.contains('collapsed');
+        localStorage.setItem('chatCollapsed', isNowCollapsed);
+
+        // Меняем текст кнопки
+        if (isNowCollapsed) {
+            toggleButton.textContent = '▲'; // Иконка разворачивания
+        } else {
+            toggleButton.textContent = '▼'; // Иконка сворачивания
+        }
+    });
+});
 </script>

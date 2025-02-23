@@ -13,18 +13,27 @@ from .models import Dialogue
 
 openai.api_key = settings.OPENAI_API_KEY
 
-def chat(request):
+
+def chat(request, fullscreen=False):
     if request.method == 'POST':
         form = ChatForm(request.POST)
         if form.is_valid():
             message = form.cleaned_data['message']
 
+            if request.user.is_authenticated:
+                dialogues = request.user.dialogues.all().order_by('created_at')
+                messages = []
+                for dialogue in dialogues:
+                    messages.append({"role": "user", "content": dialogue.user_message})
+                    messages.append({"role": "assistant", "content": dialogue.bot_message})
+            else:
+                messages = []
+
+            messages.append({"role": "user", "content": message})
 
             response = openai.ChatCompletion.create(
                 model="gpt-4o-mini",
-                messages=[
-                    {"role": "user", "content": message}
-                ]
+                messages=messages
             )
             reply = response['choices'][0]['message']['content'].strip()
             reply = re.sub(
@@ -51,7 +60,7 @@ def chat(request):
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'reply': reply})
 
-            return render(request, 'includes/chat.html', {
+            return render(request, 'full_chat.html' if fullscreen else 'includes/chat.html', {
                 'form': form,
                 'reply': reply_html,
                 'dialogues': request.user.dialogues.all() if request.user.is_authenticated else []
@@ -61,7 +70,7 @@ def chat(request):
         form = ChatForm()
 
     dialogues = request.user.dialogues.all() if request.user.is_authenticated else []
-    return render(request, 'includes/chat.html', {
+    return render(request, 'gpt/full_chat.html' if fullscreen else 'includes/chat.html', {
         'form': form,
         'dialogues': dialogues
     })
@@ -72,3 +81,6 @@ def clean_chat(request):
     if request.method == 'POST':
         history.delete()
         return redirect(request.META.get("HTTP_REFERER", "/"))
+
+def full_chat(request):
+    return chat(request, fullscreen=True)
