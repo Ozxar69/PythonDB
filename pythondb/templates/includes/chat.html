@@ -1,0 +1,115 @@
+<div class="chat-container">
+
+        <h1>Chat with GPT</h1>
+
+    <div class="messages">
+        {% for dialogue in dialogues %}
+            <div class="message user-message">
+                {{ dialogue.user_message }}
+            </div>
+            <div class="message bot-message">
+                <div class="bot-content">{{ dialogue.bot_message|safe }}</div>
+            </div>
+        {% endfor %}
+
+        {% if reply %}
+            <div class="message user-message">
+                {{ form.message.value }}
+            </div>
+            <div class="message bot-message">
+                <div class="bot-content">{{ reply|safe }}</div>
+            </div>
+        {% endif %}
+    </div>
+    <form method="post" id="chat-form" action="{% url 'gpt:chat' %}">
+        {% csrf_token %}
+        <textarea name="message" placeholder="Введите сообщение..."></textarea>
+        <button type="submit">🌐</button>
+    </form>
+    <form method="post" action="{% url 'gpt:clean_chat' %}">
+        {% csrf_token %}
+        <button type="submit" class="clean-button">Очистить чат</button>
+    </form>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chatForm = document.getElementById('chat-form');
+    const messagesDiv = document.querySelector('.messages');
+
+    // Прокручиваем вниз при загрузке страницы
+    if (messagesDiv) {
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    if (chatForm) {
+        chatForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            sendMessage();
+        });
+
+        const textarea = chatForm.querySelector('textarea');
+        if (textarea) {
+            textarea.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    sendMessage();
+                }
+            });
+        }
+    }
+
+    function sendMessage() {
+        const form = document.getElementById('chat-form');
+        const formData = new FormData(form);
+        const messagesDiv = document.querySelector('.messages');
+
+        // Добавляем сообщение пользователя сразу
+        const userMessage = document.createElement('div');
+        userMessage.className = 'message user-message';
+        userMessage.textContent = formData.get('message');
+        messagesDiv.appendChild(userMessage);
+
+        // Добавляем статус подготовки ответа
+        const statusMessage = document.createElement('div');
+        statusMessage.className = 'message status-message';
+        statusMessage.textContent = 'Подготовка ответа...';
+        messagesDiv.appendChild(statusMessage);
+
+        // Прокручиваем вниз
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),  // Добавляем CSRF-токен
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Удаляем статус подготовки ответа
+            messagesDiv.removeChild(statusMessage);
+
+            // Добавляем ответ бота
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot-message';
+            botMessage.innerHTML = `<div class="bot-content">${data.reply}</div>`;
+            messagesDiv.appendChild(botMessage);
+
+            // Прокручиваем вниз
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            form.reset();
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            // Удаляем статус подготовки ответа в случае ошибки
+            messagesDiv.removeChild(statusMessage);
+        });
+    }
+});
+
+</script>

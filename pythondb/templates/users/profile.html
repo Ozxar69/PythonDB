@@ -12,44 +12,39 @@
         <div class="user-details">
             <p><strong>Имя:</strong> {{ user_profile.first_name }} {{ user_profile.last_name }}</p>
             <p><strong>Дата регистрации:</strong> {{ user_profile.date_joined|date:"d.m.Y H:i" }}</p>
-            <p><strong>Количество постов:</strong> {{ posts.count }}</p>
+            <p><strong>Количество постов:</strong> {{ count }}</p>
         </div>
     </div>
 
     <!-- Правая колонка: Посты пользователя -->
     <div class="profile-posts">
-        <h2>Посты пользователя</h2>
-        {% if posts %}
             {% for post in posts %}
-                <div class="post-profile">
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.content|safe }}</p>
-                    <div class="post-profile-meta">
-                        {% if user.is_authenticated %}
-                            {% if post.author == user or user.is_superuser %}
-                                <span class="post-edit-icon">
-                                    <a href="{% url 'knowledge_base:edit_post' category_slug=post.category.slug subcategory_id=post.subcategory.id post_id=post.id %}">
-                                        <img src="{% static 'edit.png' %}" alt="Иконка редактирования поста" width="30" height="30">
-                                    </a>
-                                    <form method="post" action="{% url 'knowledge_base:delete_post' category_slug=post.category.slug subcategory_id=post.subcategory.id post_id=post.id %}" style="display: inline;">
-                                        {% csrf_token %}
-                                        <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
-                                            <img src="{% static 'delete.png' %}" alt="Иконка удаления поста" width="30" height="30">
-                                        </button>
-                                    </form>
-                                </span>
-                            {% endif %}
-                        {% endif %}
-                        <span class="post-meta-right">
-                            <span class="post-date">{{ post.updated_at|date:"d.m.Y H:i" }}</span>
-                            <span class="post-author"><a href="{% url 'users:profile' user.id %}">{{ post.author.first_name }}</a></span>
-                        </span>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>У пользователя пока нет постов.</p>
+        <div class="post">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content|truncatechars:200 }}</p>
+            <small>Опубликовано: {{ post.created_at|date:"d.m.Y H:i" }}</small>
+        </div>
+    {% empty %}
+        <p>У пользователя пока нет постов.</p>
+    {% endfor %}
+        <div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ posts.previous_page_number }}">предыдущая</a>
         {% endif %}
+
+        <span class="current">
+            Страница {{ posts.number }} из {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">следующая</a>
+            <a href="?page={{ posts.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
     </div>
+
 </div>
 {% endblock %}

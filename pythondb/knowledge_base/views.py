@@ -53,6 +53,7 @@ def get_objects(category_slug) -> dict:
     categories = Category.objects.all()
     subcategories = category.subcategories.all()
 
+
     return {
         CATEGORY: category,
         SUBCATEGORIES: subcategories,
@@ -78,6 +79,7 @@ def main(request):
     - Рендерит страницу с переданными данными.
     """
     categories = Category.objects.all()
+    dialogues = request.user.dialogues.all() if request.user.is_authenticated else []
 
     latest_posts = Post.objects.select_related(
         "category", "subcategory", "author"
@@ -95,6 +97,7 @@ def main(request):
         request,
         PATH_MAIN,
         {
+            'dialogues': dialogues,
             "categories": categories,
             "latest_posts": latest_posts,
             "top_users": top_users,
@@ -124,6 +127,7 @@ def category(request, category_slug):
     - Рендерит страницу категории с переданными данными.
     """
     dict = get_objects(category_slug)
+    dialogues = request.user.dialogues.all() if request.user.is_authenticated else []
     category = dict[CATEGORY]
     category.description = markdown2.markdown(category.description)
     category.description = re.sub(
@@ -137,6 +141,7 @@ def category(request, category_slug):
         PATH_CATEGORIES,
         {
             CATEGORY: category,
+            'dialogues': dialogues,
             SUBCATEGORIES: dict[SUBCATEGORIES],
             CATEGORIES: dict[CATEGORIES],
             POSTS_BY_SUBCATEGORY: {
@@ -167,6 +172,7 @@ def post(request, subcategory_id, category_slug):
         - Преобразует содержимое поста в HTML с использованием библиотеки `markdown2`.
     - Рендерит страницу с переданными данными.
     """
+    dialogues = request.user.dialogues.all() if request.user.is_authenticated else []
     dict = get_objects(category_slug)
     posts = Post.objects.filter(subcategory_id=subcategory_id)
     subcategory = SubCategory.objects.filter(id=subcategory_id)
@@ -196,6 +202,7 @@ def post(request, subcategory_id, category_slug):
         PATH_POST,
         {
             POSTS: posts,
+            'dialogues': dialogues,
             SUBCATEGORIES: dict[SUBCATEGORIES],
             CATEGORIES: dict[CATEGORIES],
             CATEGORY: dict[CATEGORY],

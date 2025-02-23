@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -46,12 +47,26 @@ def profile_view(request, user_id):
     user_profile = get_object_or_404(User, id=user_id)
     categories = Category.objects.all()
     posts = Post.objects.filter(author=user_profile).order_by("-created_at")
+    posts_count = posts.count()
+
+
+    paginator = Paginator(posts, 5)
+    page_number = request.GET.get('page')
+
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
     return render(
         request,
         "users/profile.html",
         {
             "user_profile": user_profile,
-            "posts": posts,
+            "posts": page_obj,
             CATEGORIES: categories,
+            "count": posts_count,
         },
     )
