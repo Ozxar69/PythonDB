@@ -30,7 +30,7 @@
     </form>
 </div>
 <button id="toggle-chat" class="toggle-button">▼</button>
-<!-- Кнопка сворачивания/разворачивания -->
+
 
 
 
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Добавляем сообщение пользователя сразу
         const userMessage = document.createElement('div');
         userMessage.className = 'message user-message';
-        userMessage.textContent = formData.get('message');
+        userMessage.textContent = formData.get('message').trim(); // Используем textContent
         messagesDiv.appendChild(userMessage);
 
         // Добавляем статус подготовки ответа
@@ -86,13 +86,21 @@ document.addEventListener('DOMContentLoaded', function() {
             body: formData,
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),  // Добавляем CSRF-токен
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
             },
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка сети');
+            }
+            return response.json();
+        })
         .then(data => {
             // Удаляем статус подготовки ответа
             messagesDiv.removeChild(statusMessage);
+
+            // Отладка: выводим ответ сервера в консоль
+            console.log('Ответ сервера:', data.reply);
 
             // Добавляем ответ бота
             const botMessage = document.createElement('div');
@@ -103,12 +111,19 @@ document.addEventListener('DOMContentLoaded', function() {
             // Прокручиваем вниз
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
+            // Сбрасываем форму
             form.reset();
         })
         .catch(error => {
             console.error('Ошибка:', error);
             // Удаляем статус подготовки ответа в случае ошибки
             messagesDiv.removeChild(statusMessage);
+
+            // Показываем сообщение об ошибке
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'message error-message';
+            errorMessage.textContent = 'Ошибка при отправке сообщения. Попробуйте еще раз.';
+            messagesDiv.appendChild(errorMessage);
         });
     }
 });

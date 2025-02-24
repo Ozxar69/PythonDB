@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "knowledge_base.apps.KnowledgeBaseConfig",
     "gpt.apps.GptConfig",
+    "api.apps.ApiConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -49,7 +50,7 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=90),
     "AUTH_HEADER_TYPES": ("Bearer",),
     "TIME_ZONE": timezone.utc,
 }
@@ -92,25 +93,25 @@ WSGI_APPLICATION = "pythondb.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": os.getenv("DB_NAME", "default_db_name"),
-#         "USER": os.getenv("DB_USER", "default_user"),
-#         "PASSWORD": os.getenv("DB_PASSWORD", "default_password"),
-#         "HOST": os.getenv("DB_HOST", "localhost"),
-#         "PORT": os.getenv("DB_PORT", "5432"),
-#     }
-# }
-
-# sqlite3
-DIRRECTION = os.getenv("DATABASE_URL")
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": DIRRECTION,
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME", "default_db_name"),
+        "USER": os.getenv("DB_USER", "default_user"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "default_password"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
+
+# sqlite3
+# DIRRECTION = os.getenv("DATABASE_URL")
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": DIRRECTION,
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
