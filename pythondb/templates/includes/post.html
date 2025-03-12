@@ -12,7 +12,7 @@
                             <a href="{% url 'knowledge_base:edit_post' category_slug=category.slug subcategory_id=subcategory.id post_id=post.id%}">
                                 <img src="{% static 'edit.png' %}" alt="Иконка редактирования поста" width="30" height="30">
                             </a>
-                            <button type="button" class="delete-button" data-post-id="{{ post.id }}" style="background: none; border: none; padding: 0; cursor: pointer;">
+                            <button type="button" class="delete-button" data-subcategory-id="{{ subcategory.id }}" data-post-id="{{ post.id }}" style="background: none; border: none; padding: 0; cursor: pointer;">
                                 <img src="{% static 'delete.png' %}" alt="Иконка удаления поста" width="30" height="30">
                             </button>
                         </span>
@@ -48,30 +48,47 @@
     </div>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const deleteButtons = document.querySelectorAll(".delete-button");
-        const deleteModal = document.getElementById("deleteModal");
-        const deleteForm = document.getElementById("deleteForm");
-        const cancelButton = document.getElementById("cancelButton");
+document.addEventListener("DOMContentLoaded", function () {
+    const deleteButtons = document.querySelectorAll(".delete-button");
+    const deleteModal = document.getElementById("deleteModal");
+    const deleteForm = document.getElementById("deleteForm");
+    const cancelButton = document.getElementById("cancelButton");
 
-        deleteButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                const postId = this.getAttribute("data-post-id");
-                const actionUrl = `{% url 'knowledge_base:delete_post' category_slug=category.slug subcategory_id=subcategory.id post_id=0 %}`.replace("0", postId);
-                deleteForm.setAttribute("action", actionUrl);
-                deleteModal.style.display = "flex";
-            });
-        });
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            // Получаем subcategory_id и post_id из атрибутов
+            const subcategoryId = this.getAttribute("data-subcategory-id");
+            const postId = this.getAttribute("data-post-id");
 
-        cancelButton.addEventListener("click", function () {
-            deleteModal.style.display = "none";
-        });
-
-        // Закрытие модального окна при клике вне его
-        window.addEventListener("click", function (event) {
-            if (event.target === deleteModal) {
-                deleteModal.style.display = "none";
+            // Проверяем, что subcategoryId и postId существуют
+            if (!subcategoryId || !postId) {
+                console.error("Invalid subcategoryId or postId");
+                return;
             }
+
+            // Формируем URL для удаления поста
+            const actionUrl = `/api-category/${subcategoryId}/${postId}/delete_post/`;
+
+            // Проверяем, что URL сформирован правильно
+            console.log("Subcategory ID:", subcategoryId);
+            console.log("Post ID:", postId);
+            console.log("Action URL:", actionUrl);
+
+            // Устанавливаем action формы и показываем модальное окно
+            deleteForm.setAttribute("action", actionUrl);
+            deleteModal.style.display = "flex";
         });
     });
+
+    cancelButton.addEventListener("click", function () {
+        deleteModal.style.display = "none";
+    });
+
+    // Закрытие модального окна при клике вне его
+    window.addEventListener("click", function (event) {
+        if (event.target === deleteModal) {
+            deleteModal.style.display = "none";
+        }
+    });
+});
 </script>

@@ -231,6 +231,9 @@ def create_post(request, category_slug, subcategory_id):
         - Сохраняет пост и перенаправляет на страницу постов.
     - Если запрос не является POST-запросом, отображает пустую форму для создания поста.
     """
+    dialogues = (
+        request.user.dialogues.all() if request.user.is_authenticated else []
+    )
     dict = get_objects(category_slug)
     category = get_object_or_404(Category, slug=category_slug)
     subcategory = get_object_or_404(SubCategory, id=subcategory_id)
@@ -257,6 +260,7 @@ def create_post(request, category_slug, subcategory_id):
         "knowledge_base/created_post.html",
         {
             "form": form,
+            "dialogues": dialogues,
             SUBCATEGORIES: dict[SUBCATEGORIES],
             CATEGORIES: dict[CATEGORIES],
             CATEGORY: dict[CATEGORY],
@@ -290,6 +294,9 @@ def edit_post(request, category_slug, subcategory_id, post_id):
     - Если запрос не POST, отображает форму редактирования с текущими данными поста.
     - Рендерит страницу с формой редактирования.
     """
+    dialogues = (
+        request.user.dialogues.all() if request.user.is_authenticated else []
+    )
     dict = get_objects(category_slug)
     subcategory_name = SubCategory.objects.filter(id=subcategory_id)
     post = get_object_or_404(Post, id=post_id)
@@ -310,6 +317,7 @@ def edit_post(request, category_slug, subcategory_id, post_id):
         "knowledge_base/edit_post.html",
         {
             "form": form,
+            "dialogues": dialogues,
             SUBCATEGORIES: dict[SUBCATEGORIES],
             CATEGORIES: dict[CATEGORIES],
             CATEGORY: dict[CATEGORY],
